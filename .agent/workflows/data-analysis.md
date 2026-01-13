@@ -2,12 +2,171 @@
 
 AI-guided workflow for data analysis projects using SQLite, Python, and MCP tools.
 
+---
+
+## Phase 0: Context Creation (5W1H Framework)
+
+> **AI-GUIDANCE**: Before touching data, establish complete context. This prevents wasted cycles analyzing the wrong things.
+
+### The 5W1H Questions for Data Analysis
+
+| Question | Data Analysis Focus | Example |
+|----------|---------------------|---------|
+| **WHO** | Who needs this analysis? Who provided the data? | "Marketing team, data from CRM export" |
+| **WHAT** | What questions must be answered? What data exists? | "Customer churn predictors, 2 years of transactions" |
+| **WHEN** | What time period? When is delivery needed? | "Q3-Q4 2024 data, results by Friday" |
+| **WHERE** | Data source location, output destination | "PostgreSQL dump → SQLite → Markdown report" |
+| **WHY** | Business decision this supports, success metric | "Reduce churn 10%, identify top 3 risk factors" |
+| **HOW** | Analysis methods, tools, validation approach | "SQLite queries → Python viz → statistical tests" |
+
+### Context Template
+
+```yaml
+analysis_context:
+  who: 
+    requester: "[stakeholder name/role]"
+    data_owner: "[source system/team]"
+  what:
+    questions: ["[question 1]", "[question 2]"]
+    data_description: "[rows, columns, format]"
+  when:
+    data_period: "[start] to [end]"
+    deadline: "[date]"
+  where:
+    source: "[file/database/API]"
+    output: "[format and destination]"
+  why:
+    decision: "[what this informs]"
+    success: "[measurable outcome]"
+  how:
+    tools: ["SQLite", "Python", "pandas"]
+    validation: "[how to verify correctness]"
+```
+
+### Example: Filled Context
+
+```yaml
+analysis_context:
+  who:
+    requester: "VP of Sales"
+    data_owner: "Salesforce export from RevOps"
+  what:
+    questions: 
+      - "Which accounts are at highest churn risk?"
+      - "What behaviors predict churn in 30 days?"
+    data_description: "50K accounts, 24 months, 45 columns"
+  when:
+    data_period: "2023-01 to 2024-12"
+    deadline: "2025-01-17"
+  why:
+    decision: "Allocate CSM resources to at-risk accounts"
+    success: "Identify 80% of churning accounts 30 days early"
+  how:
+    tools: ["SQLite", "pandas", "scikit-learn"]
+    validation: "Backtest on Q3 2024 known churns"
+```
+
+---
+
+## Prioritized Analysis Questions
+
+> **Principle**: Answer foundational questions before diving into complex analysis.
+
+### Question Priority for Data Analysis
+
+| Priority | Question Type | Examples |
+|----------|--------------|----------|
+| **P1 - Data Quality** | Can I trust this data? | Nulls, duplicates, ranges, freshness |
+| **P2 - Descriptive** | What does the data show? | Distributions, counts, trends |
+| **P3 - Diagnostic** | Why did this happen? | Correlations, segments, anomalies |
+| **P4 - Predictive** | What will happen next? | Models, forecasts (only if P1-P3 done) |
+
+### The Analysis Sequence
+
+```
+P1: DATA QUALITY (ALWAYS FIRST)
+├── Row count matches expectation?
+├── Date range correct?
+├── Null patterns acceptable?
+├── Duplicates handled?
+└── Value ranges valid?
+
+P2: DESCRIPTIVE (SHAPE THE DATA)
+├── Key distributions
+├── Time-series patterns
+├── Category breakdowns
+└── Summary statistics
+
+P3: DIAGNOSTIC (EXPLAIN PATTERNS)
+├── Correlation analysis
+├── Segment comparisons
+├── Anomaly investigation
+└── Root cause hypotheses
+
+P4: PREDICTIVE (ONLY IF WARRANTED)
+├── Feature engineering
+├── Model training
+├── Validation
+└── Business interpretation
+```
+
+### Pre-Flight Checklist
+
+Before ANY analysis query, confirm:
+
+- [ ] **WHO** asked for this is documented
+- [ ] **WHAT** question this answers is clear
+- [ ] **P1 quality checks** have passed
+- [ ] **Expected output format** is defined
+- [ ] **Validation method** exists
+
+---
+
+## Focused Execution Protocol
+
+> **Principle**: Complete one analysis phase fully before moving to next.
+
+### Single-Task Execution Rules
+
+1. **Finish P1 completely** before any P2 queries
+2. **One question per query block** - Don't combine unrelated analysis
+3. **Save immediately** - Document each finding as discovered
+4. **Validate before proceeding** - Sanity check each result
+
+### Execution Loop
+
+```
+┌─────────────────────────────────────┐
+│  START: Load 5W1H context           │
+├─────────────────────────────────────┤
+│  P1: Data Quality Loop              │
+│    1. Run quality check query       │
+│    2. Document findings             │
+│    3. Fix issues or note caveats    │
+│    4. Proceed only when confident   │
+├─────────────────────────────────────┤
+│  P2-P4: Analysis Loop (one at time) │
+│    1. State the question            │
+│    2. Write and run query           │
+│    3. Interpret results             │
+│    4. Save to notes                 │
+│    5. Check: Answer the WHY yet?    │
+├─────────────────────────────────────┤
+│  END: Synthesize findings           │
+└─────────────────────────────────────┘
+```
+
+---
+
 ## Principles
 
-1. **Query first, reason later** - Use SQL to filter/aggregate before AI analysis
-2. **Preserve raw data** - Never modify source files; create derived tables
-3. **Document transformations** - Save data lineage in pomera notes
-4. **Iterate incrementally** - Build understanding step by step
+1. **Context first** - Complete 5W1H before touching data
+2. **Quality before analysis** - P1 checks are mandatory
+3. **One question at a time** - Complete each before next
+4. **Query first, reason later** - Use SQL to filter/aggregate before AI analysis
+5. **Preserve raw data** - Never modify source files; create derived tables
+6. **Document transformations** - Save data lineage in pomera notes
+7. **Iterate incrementally** - Build understanding step by step
 
 ---
 

@@ -56,6 +56,25 @@ env/
 .pydevproject
 .settings/
 
+# ===== AI IDE Rules (synced from AGENTS.md) =====
+# AGENTS.md is the source of truth - these are generated
+.clinerules
+.clinerules/
+.cursorrules
+.cursor/rules/
+.windsurf/rules/
+CLAUDE.md
+.github/copilot-instructions.md
+.aiassistant/
+.rules
+WARP.md
+.kiro/steering/
+project_rules.md
+.voidrules
+GEMINI.md
+.gemini/
+*.bak
+
 # ===== OS Files =====
 .DS_Store
 .DS_Store?
