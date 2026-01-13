@@ -1,0 +1,17 @@
+# AI Agent Project Template - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Web search functionality
+requests>=2.28.0
+
+# Data processing
+pandas>=2.0.0
+sqlite-utils>=3.35  # Optional: CLI for SQLite
+
+# Gmail API (for email tools - optional)
+google-api-python-client>=2.100.0
+google-auth-httplib2>=0.2.0
+google-auth-oauthlib>=1.1.0
+
+# MCP text-editor server
+# uv  # Install separately: pip install uv

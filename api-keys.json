@@ -1,0 +1,18 @@
+{
+  "google_search": {
+    "api_key": "YOUR_GOOGLE_API_KEY_HERE",
+    "cse_id": "YOUR_CUSTOM_SEARCH_ENGINE_ID",
+    "_comment": "Google Custom Search API - 100 free queries/day",
+    "_setup": "Get key at https://console.cloud.google.com/apis/credentials, create CSE at https://programmablesearchengine.google.com/"
+  },
+  "brave_search": {
+    "api_key": "YOUR_BRAVE_API_KEY_HERE",
+    "_comment": "Brave Search API - 2000 free queries/month",
+    "_setup": "Get key at https://brave.com/search/api/"
+  },
+  "context7": {
+    "api_key": "YOUR_CONTEXT7_API_KEY_HERE",
+    "_comment": "Context7 API - Code documentation and library search",
+    "_setup": "Get key at https://context7.io/"
+  }
+}
