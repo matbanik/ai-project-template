@@ -104,6 +104,44 @@ Each workflow is documented in `.agent/workflows/` and ready to use.
 
 ---
 
+## 🎯 Master Your Prompts, Save Tokens
+
+> **Prompts are code.** Treat them like it—version them, test them, iterate.
+
+This template includes a **Prompt Progression Guide** (`.agent/docs/prompt-progression-guide.md`) that teaches you to systematically improve your AI interactions.
+
+### Why It Matters
+
+| Without System | With Prompt System |
+|----------------|-------------------|
+| ❌ Repeat same mistakes | ✅ Learn from every prompt |
+| ❌ Waste tokens on vague requests | ✅ Precise, efficient prompts |
+| ❌ Inconsistent results | ✅ Reproducible quality |
+| ❌ Re-invent the wheel | ✅ Reusable prompt library |
+
+### Token Savings You Can Achieve
+
+| Technique | Potential Savings |
+|-----------|-------------------|
+| Explicit output format | 20-30% fewer re-prompts |
+| Few-shot examples | 30-50% less iteration |
+| Constraints & boundaries | 20-40% shorter responses |
+| Prompt caching (static context first) | Up to 90% on repeated calls |
+| RAG (inject only relevant docs) | Up to 70% context reduction |
+
+### The Progression Path
+
+| Level | Focus | Key Skill |
+|-------|-------|-----------|
+| **Beginner** | Clear commands | Explicit formatting |
+| **Intermediate** | Structured thinking | POWER framework + few-shot |
+| **Advanced** | Meta-cognition | Self-improvement patterns |
+| **Expert** | Context engineering | Autonomous agent design |
+
+**👉 Start here:** Read [`.agent/docs/prompt-progression-guide.md`](./.agent/docs/prompt-progression-guide.md) and pick ONE technique to practice this week.
+
+---
+
 ## Getting Started
 
 1. **Read the README** (you're doing great so far 👍)

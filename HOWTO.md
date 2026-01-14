@@ -543,6 +543,99 @@ GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 
 ---
 
+## Prompt Improvement System
+
+### Why Invest in Better Prompts?
+
+Every vague or poorly-structured prompt costs you:
+- **Tokens** — More back-and-forth = more money spent
+- **Time** — Waiting for clarification loops
+- **Quality** — Inconsistent results require manual fixes
+
+This template includes a comprehensive **Prompt Progression Guide** that teaches systematic prompt improvement.
+
+### Token Savings at a Glance
+
+| Technique | How It Saves | Potential Savings |
+|-----------|--------------|-------------------|
+| **Explicit formatting** | Avoids "can you reformat that?" follow-ups | 20-30% |
+| **Few-shot examples** | AI understands faster, fewer iterations | 30-50% |
+| **Constraints** | "Max 5 items" = shorter responses | 20-40% |
+| **Prompt caching** | Static context first, reused across calls | Up to 90% |
+| **RAG patterns** | Only inject relevant docs, not everything | Up to 70% |
+| **RSIP (self-improvement)** | AI catches own errors before you do | 40-60% |
+
+### The POWER Framework (Intermediate Level)
+
+Use this structure for consistent results:
+
+| Letter | Element | Example |
+|--------|---------|---------|
+| **P** | Purpose | "Review this code for security issues" |
+| **O** | Output Format | "Return as numbered list with severity" |
+| **W** | What (Core Task) | "Focus on SQL injection and XSS" |
+| **E** | Examples | Show 2-3 sample outputs |
+| **R** | Rules/Constraints | "Maximum 5 issues, skip style" |
+
+### Quick Start: Pick Your Level
+
+| If You're... | Start With | Time Investment |
+|--------------|------------|-----------------|
+| **New to prompting** | Beginner section: Clear commands | 10 min read |
+| **Getting inconsistent results** | Intermediate: POWER framework | 20 min read |
+| **Want to optimize costs** | Advanced: Meta-cognition patterns | 30 min read |
+| **Building AI workflows** | Expert: Context engineering | Full guide |
+
+### Practical Implementation
+
+1. **Read the guide:** [`.agent/docs/prompt-progression-guide.md`](./.agent/docs/prompt-progression-guide.md)
+
+2. **Create your prompt library:**
+   ```
+   .agent/
+   └── prompts/
+       ├── README.md          # Index of your prompts
+       ├── templates/         # Reusable structures
+       └── weekly-reflections/ # Learning journal
+   ```
+
+3. **Schedule weekly reflection** (10 minutes every Friday):
+   - What prompt worked best this week?
+   - What prompt failed? How would you rewrite it?
+   - One technique to practice next week
+
+4. **Use AI as your coach** — Copy reflection prompts from the guide and run them on your recent work
+
+### Example: Before & After
+
+**Before (vague):**
+```
+Summarize this article
+```
+
+**After (structured):**
+```
+TASK: Summarize this article for a fintech newsletter
+FORMAT: 3 bullet points, each under 20 words
+CONSTRAINTS: No jargon, no promotional language
+AUDIENCE: Busy professionals
+```
+
+**Result:** First version might need 2-3 follow-ups. Second version works on first try = 60% token savings.
+
+### The Progression Path
+
+| Level | What You'll Learn | Key Outcome |
+|-------|------------------|-------------|
+| **1. Beginner** | Clear commands, explicit formats | Coherent responses |
+| **2. Intermediate** | POWER framework, few-shot examples | Consistent quality |
+| **3. Advanced** | RSIP, confidence calibration | Self-correcting prompts |
+| **4. Expert** | Context budgeting, meta-prompting | Autonomous workflows |
+
+**👉 Action item:** Read the guide, pick ONE technique, practice it for one week, then level up.
+
+---
+
 ## Related Resources
 
 ### GitHub Templates & Inspiration
