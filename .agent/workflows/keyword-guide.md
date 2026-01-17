@@ -41,15 +41,15 @@ The AI will:
 1. **Check search traction** using `web_search.py` (Brave/Google)
    - Search volume indicators
    - Current top results analysis
-   
+
 2. **Find related searches** using SERP Keyword Extractor (ValueSERP)
    - People Also Ask questions
    - Related keyword variations
-   
+
 3. **Assess competition** by analyzing top results
    - Domain authority of ranking sites
    - Content depth and quality
-   
+
 4. **Compile a prioritized list** with recommendations
 
 ### APIs Used
@@ -135,7 +135,7 @@ The AI will:
 
 ### Option B: Specific Files
 ```
-"Read content-docs/cycling/BLOG - Bike Review Research and Summary.md and 
+"Read content-docs/cycling/BLOG - Bike Review Research and Summary.md and
 content-docs/cycling/BLOG - Mat_Banik_fit_data.pdf and extract keyword opportunities"
 ```
 
@@ -146,7 +146,7 @@ content-docs/cycling/BLOG - Mat_Banik_fit_data.pdf and extract keyword opportuni
 
 ### Option C: Full Content Audit
 ```
-"Scan all my content-docs and identify the top 20 keywords I should prioritize 
+"Scan all my content-docs and identify the top 20 keywords I should prioritize
 across all topics (cycling, nutrition, markets, etc.)"
 ```
 
@@ -221,7 +221,7 @@ If you have Google Search Console set up, mention:
 
 ### Ask for Competitor Comparison
 ```
-"Compare my cycling fitting content against the top 3 ranking sites for 
+"Compare my cycling fitting content against the top 3 ranking sites for
 'road bike fitting guide' and identify content gaps"
 ```
 

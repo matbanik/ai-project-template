@@ -417,17 +417,17 @@ policy = get_policy()
 if policy.is_account_enabled('matbanik', 'gmail'):
     # Get folders to fetch
     folders = policy.get_folders('matbanik', 'gmail')
-    
+
     # Get max emails for this account
     max_emails = policy.get_max_emails('matbanik', 'gmail')
-    
+
     # Build Gmail query
     query = policy.build_gmail_query('matbanik')
-    
+
     # Process emails with filtering
     for email in fetch_emails():
         enriched = policy.enrich_email(email)
-        
+
         if policy.filter_email(enriched, 'matbanik', 'gmail'):
             save_to_database(enriched)
 ```

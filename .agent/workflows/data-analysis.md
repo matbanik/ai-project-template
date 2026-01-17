@@ -23,7 +23,7 @@ AI-guided workflow for data analysis projects using SQLite, Python, and MCP tool
 
 ```yaml
 analysis_context:
-  who: 
+  who:
     requester: "[stakeholder name/role]"
     data_owner: "[source system/team]"
   what:
@@ -51,7 +51,7 @@ analysis_context:
     requester: "VP of Sales"
     data_owner: "Salesforce export from RevOps"
   what:
-    questions: 
+    questions:
       - "Which accounts are at highest churn risk?"
       - "What behaviors predict churn in 30 days?"
     data_description: "50K accounts, 24 months, 45 columns"

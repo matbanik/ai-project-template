@@ -26,7 +26,7 @@ def init_database():
     """Initialize the database schema."""
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS emails (
             id TEXT PRIMARY KEY,
@@ -41,14 +41,14 @@ def init_database():
             account TEXT DEFAULT 'matbanik'
         )
     ''')
-    
+
     # Indexes for common analytics queries
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_timestamp ON emails(timestamp)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_sender ON emails(sender)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_platform ON emails(platform)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_notification_type ON emails(notification_type)')
     cursor.execute('CREATE INDEX IF NOT EXISTS idx_emails_account ON emails(account)')
-    
+
     # Track sync state for incremental fetching
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS sync_state (
@@ -56,7 +56,7 @@ def init_database():
             value TEXT
         )
     ''')
-    
+
     conn.commit()
     conn.close()
     print(f"Database initialized: {DB_FILE}")
@@ -74,7 +74,7 @@ def upsert_email(
 ):
     """
     Insert or update an email record.
-    
+
     Args:
         email_id: Gmail message ID (unique)
         sender: From address
@@ -87,7 +87,7 @@ def upsert_email(
     """
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute('''
         INSERT INTO emails (id, sender, subject, body, timestamp, fetched_at, platform, notification_type, original_url)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -101,7 +101,7 @@ def upsert_email(
             notification_type = excluded.notification_type,
             original_url = excluded.original_url
     ''', (email_id, sender, subject, body, timestamp, datetime.now(), platform, notification_type, original_url))
-    
+
     conn.commit()
     conn.close()
 
@@ -109,16 +109,16 @@ def upsert_email(
 def upsert_emails_batch(emails: list[dict]):
     """
     Batch insert or update email records for efficiency.
-    
+
     Args:
         emails: List of dicts with keys: id, sender, subject, body, timestamp
     """
     if not emails:
         return
-    
+
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     now = datetime.now()
     data = [
         (
@@ -135,7 +135,7 @@ def upsert_emails_batch(emails: list[dict]):
         )
         for e in emails
     ]
-    
+
     cursor.executemany('''
         INSERT INTO emails (id, sender, subject, body, timestamp, fetched_at, platform, notification_type, original_url, account)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -150,7 +150,7 @@ def upsert_emails_batch(emails: list[dict]):
             original_url = excluded.original_url,
             account = excluded.account
     ''', data)
-    
+
     conn.commit()
     conn.close()
 
@@ -159,11 +159,11 @@ def get_last_sync_timestamp() -> Optional[datetime]:
     """Get the timestamp of the last successful sync."""
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute("SELECT value FROM sync_state WHERE key = 'last_sync'")
     row = cursor.fetchone()
     conn.close()
-    
+
     if row:
         return datetime.fromisoformat(row['value'])
     return None
@@ -173,12 +173,12 @@ def set_last_sync_timestamp(timestamp: datetime):
     """Record the timestamp of the last successful sync."""
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute('''
         INSERT INTO sync_state (key, value) VALUES ('last_sync', ?)
         ON CONFLICT(key) DO UPDATE SET value = excluded.value
     ''', (timestamp.isoformat(),))
-    
+
     conn.commit()
     conn.close()
 
@@ -187,11 +187,11 @@ def email_exists(email_id: str) -> bool:
     """Check if an email already exists in the database."""
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute("SELECT 1 FROM emails WHERE id = ?", (email_id,))
     exists = cursor.fetchone() is not None
     conn.close()
-    
+
     return exists
 
 
@@ -199,11 +199,11 @@ def get_email_count() -> int:
     """Get the total number of emails in the database."""
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute("SELECT COUNT(*) as count FROM emails")
     count = cursor.fetchone()['count']
     conn.close()
-    
+
     return count
 
 
@@ -211,11 +211,11 @@ def get_existing_ids() -> set[str]:
     """Get all existing email IDs for deduplication."""
     conn = get_connection()
     cursor = conn.cursor()
-    
+
     cursor.execute("SELECT id FROM emails")
     ids = {row['id'] for row in cursor.fetchall()}
     conn.close()
-    
+
     return ids
 
 

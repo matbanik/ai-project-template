@@ -29,10 +29,10 @@ Store prompts in your `.agent/prompts/` folder using this structure:
 
 ```markdown
 # Prompt: [Descriptive Name]
-**Version**: 1.0  
-**Created**: YYYY-MM-DD  
-**Last Improved**: YYYY-MM-DD  
-**Token Estimate**: ~X tokens  
+**Version**: 1.0
+**Created**: YYYY-MM-DD
+**Last Improved**: YYYY-MM-DD
+**Token Estimate**: ~X tokens
 **Success Rate**: X/10 attempts
 
 ## The Prompt

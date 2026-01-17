@@ -299,7 +299,7 @@ For most use cases, you won't hit these limits.
   "microsoft_accounts": {
     "<account_name>": {
       "application_id": "GUID - Azure AD app client ID",
-      "tenant_id": "GUID - Azure AD tenant ID", 
+      "tenant_id": "GUID - Azure AD tenant ID",
       "client_secret": "Secret value from Certificates & secrets",
       "mailbox": "user@company.com - email to access",
       "_comment": "optional description"
@@ -324,7 +324,7 @@ If you have existing `tools/email/microsoft/settings.json`:
 # The new system reads from api-keys.json instead
 # Copy your credentials:
 # - application_id from settings.json → api-keys.json
-# - tenant_id from settings.json → api-keys.json  
+# - tenant_id from settings.json → api-keys.json
 # - secret_value from settings.json → client_secret in api-keys.json
 # - Add mailbox email address
 ```

@@ -37,7 +37,7 @@ def load_api_keys() -> Dict:
     if not api_keys_path.exists():
         print(f"❌ API keys file not found: {api_keys_path}")
         sys.exit(1)
-    
+
     with open(api_keys_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -45,25 +45,25 @@ def load_api_keys() -> Dict:
 def search_google(query: str, count: int = 5) -> List[Dict]:
     """Search using Google Custom Search API."""
     keys = load_api_keys()
-    
+
     if "google_search" not in keys:
         print("❌ Google Search not configured in api-keys.json")
         return []
-    
+
     api_key = keys["google_search"]["api_key"]
     cse_id = keys["google_search"]["cse_id"]
-    
+
     url = f"https://www.googleapis.com/customsearch/v1?key={api_key}&cx={cse_id}&q={urllib.parse.quote(query)}&num={min(count, 10)}"
-    
+
     try:
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=30) as response:
             data = json.loads(response.read().decode())
-        
+
         if "error" in data:
             print(f"❌ Google API Error: {data['error']['message']}")
             return []
-        
+
         results = []
         for item in data.get("items", []):
             results.append({
@@ -72,9 +72,9 @@ def search_google(query: str, count: int = 5) -> List[Dict]:
                 "url": item.get("link", ""),
                 "source": "google"
             })
-        
+
         return results
-        
+
     except urllib.error.HTTPError as e:
         print(f"❌ HTTP Error: {e.code} - {e.reason}")
         return []
@@ -86,23 +86,23 @@ def search_google(query: str, count: int = 5) -> List[Dict]:
 def search_brave(query: str, count: int = 5) -> List[Dict]:
     """Search using Brave Search API."""
     keys = load_api_keys()
-    
+
     if "brave_search" not in keys:
         print("❌ Brave Search not configured in api-keys.json")
         return []
-    
+
     api_key = keys["brave_search"]["api_key"]
-    
+
     url = f"https://api.search.brave.com/res/v1/web/search?q={urllib.parse.quote(query)}&count={min(count, 20)}"
-    
+
     try:
         req = urllib.request.Request(url)
         req.add_header("Accept", "application/json")
         req.add_header("X-Subscription-Token", api_key)
-        
+
         with urllib.request.urlopen(req, timeout=30) as response:
             data = json.loads(response.read().decode())
-        
+
         results = []
         for item in data.get("web", {}).get("results", []):
             results.append({
@@ -111,9 +111,9 @@ def search_brave(query: str, count: int = 5) -> List[Dict]:
                 "url": item.get("url", ""),
                 "source": "brave"
             })
-        
+
         return results
-        
+
     except urllib.error.HTTPError as e:
         print(f"❌ HTTP Error: {e.code} - {e.reason}")
         return []
@@ -123,60 +123,46 @@ def search_brave(query: str, count: int = 5) -> List[Dict]:
 
 
 def search_context7(query: str, count: int = 5) -> List[Dict]:
-    """Search using Context7 API for code documentation."""
-    keys = load_api_keys()
-    
-    if "context7" not in keys:
-        print("❌ Context7 not configured in api-keys.json")
-        return []
-    
-    api_key = keys["context7"]["api_key"]
-    
-    url = "https://api.context7.com/v1/search"
-    
-    try:
-        payload = json.dumps({
-            "query": query,
-            "limit": min(count, 10)
-        }).encode('utf-8')
-        
-        req = urllib.request.Request(url, data=payload, method='POST')
-        req.add_header("Content-Type", "application/json")
-        req.add_header("Authorization", f"Bearer {api_key}")
-        
-        with urllib.request.urlopen(req, timeout=30) as response:
-            data = json.loads(response.read().decode())
-        
-        results = []
-        for item in data.get("results", []):
-            results.append({
-                "title": item.get("title", ""),
-                "snippet": item.get("content", "")[:500],  # Limit snippet length
-                "url": item.get("url", ""),
-                "source": "context7",
-                "library": item.get("library", ""),
-                "relevance": item.get("relevance_score", 0)
-            })
-        
-        return results
-        
-    except urllib.error.HTTPError as e:
-        print(f"❌ HTTP Error: {e.code} - {e.reason}")
-        return []
-    except Exception as e:
-        print(f"❌ Error: {e}")
-        return []
+    """
+    Context7 MCP server for code documentation.
+
+    Context7 is an MCP (Model Context Protocol) server - it doesn't have a REST API.
+    It's designed for AI code editors like Cursor, Windsurf, VS Code with Cline, etc.
+
+    To use Context7:
+    1. Add to your AI editor's MCP settings:
+       {
+         "context7": {
+           "type": "http",
+           "url": "https://context7.liam.sh/mcp"
+         }
+       }
+    2. In your AI prompt, include "use context7" to activate it
+
+    For CLI usage, use --engine brave or --engine google instead.
+    """
+    print("ℹ️  Context7 is an MCP server (not a REST API)")
+    print("   It's designed for AI code editors, not CLI scripts.")
+    print("")
+    print("   To use Context7 in your AI editor:")
+    print("   1. Add to mcp_settings.json:")
+    print('      "context7": { "type": "http", "url": "https://context7.liam.sh/mcp" }')
+    print("   2. Use 'use context7' in your AI prompts")
+    print("")
+    print("   For CLI search, try: --engine brave or --engine google")
+
+    return []
 
 
 def search(query: str, engine: str = "brave", count: int = 5) -> List[Dict]:
     """
     Search the web using the specified engine.
-    
+
     Args:
         query: Search query string
         engine: 'brave', 'google', or 'context7' (default: brave)
         count: Number of results (default: 5)
-    
+
     Returns:
         List of result dicts with title, snippet, url, source
     """
@@ -193,24 +179,24 @@ def format_results(results: List[Dict], query: str) -> str:
     """Format search results for display."""
     if not results:
         return f"No results found for '{query}'"
-    
+
     source = results[0]['source']
     output = [f"\n🔍 Search results for: \"{query}\" ({source})\n"]
     output.append("=" * 60)
-    
+
     for i, r in enumerate(results, 1):
         output.append(f"\n{i}. {r['title']}")
-        
+
         # For Context7, show library info
         if source == "context7" and r.get("library"):
             output.append(f"   📚 Library: {r['library']}")
-        
+
         snippet = r['snippet']
         if len(snippet) > 200:
             snippet = snippet[:200] + "..."
         output.append(f"   {snippet}")
         output.append(f"   🔗 {r['url']}")
-    
+
     output.append("\n" + "=" * 60)
     return "\n".join(output)
 
@@ -227,7 +213,7 @@ Examples:
     python web_search.py "python asyncio tutorial" --count 10 --json
         """
     )
-    
+
     parser.add_argument("query", help="Search query")
     parser.add_argument("--engine", "-e", choices=["brave", "google", "context7"], default="brave",
                         help="Search engine to use (default: brave)")
@@ -235,11 +221,11 @@ Examples:
                         help="Number of results (default: 5)")
     parser.add_argument("--json", "-j", action="store_true",
                         help="Output raw JSON instead of formatted text")
-    
+
     args = parser.parse_args()
-    
+
     results = search(args.query, args.engine, args.count)
-    
+
     if args.json:
         print(json.dumps(results, indent=2))
     else:

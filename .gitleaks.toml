@@ -1,0 +1,37 @@
+# Gitleaks Configuration
+# Documentation: https://github.com/gitleaks/gitleaks
+
+title = "Gitleaks Configuration for _Extractors"
+
+# Use default rules
+[extend]
+useDefault = true
+
+# Files to allow (reduce false positives)
+[allowlist]
+description = "Allowlisted files and patterns"
+paths = [
+    '''\.gitleaks\.toml$''',
+    '''\.pre-commit-config\.yaml$''',
+    '''\.gitignore$''',
+    '''package-lock\.json$''',
+    '''\.md$''',
+]
+
+# Specific patterns to ignore (add false positives here)
+regexes = [
+    # Example: '''example_api_key_pattern_to_ignore''',
+]
+
+# Additional rules for custom secret patterns
+[[rules]]
+id = "olaplex-custom-api-key"
+description = "Olaplex custom API key pattern"
+regex = '''(?i)(olaplex[_-]?api[_-]?key|olx[_-]?key)\s*[:=]\s*['"]?([a-zA-Z0-9_-]{16,})['"]?'''
+tags = ["custom", "olaplex"]
+
+[[rules]]
+id = "generic-credential-assignment"
+description = "Generic credential assignments"
+regex = '''(?i)(password|passwd|pwd|secret|token|api[_-]?key|apikey|auth[_-]?token)\s*[:=]\s*['"]([^'"]{8,})['"]'''
+tags = ["generic"]

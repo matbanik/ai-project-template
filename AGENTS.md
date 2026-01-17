@@ -398,7 +398,7 @@ python tools/web_search.py "your query" --json
 
 1. **Before deleting**: Save the entire file content to pomera notes:
    ```bash
-   pomera_notes save --title "Deleted/{filepath}-{date}" --input_content "<entire file content>"
+   pomera-mcp --call pomera_notes --args '{"action": "save", "title": "Deleted/{filepath}-{date}", "input_content": "<entire file content>"}'
    ```
 
 2. **Include in the note**:
@@ -410,15 +410,50 @@ python tools/web_search.py "your query" --json
 3. **Example workflow**:
    ```bash
    # 1. Read the file first
-   read_file path/to/file.md
+   cat path/to/file.md
 
    # 2. Save to pomera notes before deletion
-   pomera_notes save --title "Deleted/path/to/file.md-{date}" \
-     --input_content "<complete file content>" \
-     --output_content "Deleted per user request: [reason]"
+   pomera-mcp --call pomera_notes --args '{
+     "action": "save",
+     "title": "Deleted/path/to/file.md-2026-01-16",
+     "input_content": "<complete file content>",
+     "output_content": "Deleted per user request: [reason]"
+   }'
 
    # 3. Only then delete the file
+   rm path/to/file.md
    ```
+
+### Large-Scale Modifications Policy
+
+**Before making large-scale modifications**, back up the original content:
+
+**What counts as large-scale:**
+- Refactoring >50% of a file
+- Replacing entire functions/classes
+- Converting between languages (shell → Python)
+- Restructuring project directories
+- Bulk find/replace operations
+
+**Backup workflow:**
+```bash
+# Save original before major refactoring
+pomera-mcp --call pomera_notes --args '{
+  "action": "save",
+  "title": "Backup/{component}-original-{date}",
+  "input_content": "<original code>",
+  "output_content": "Backup before: [description of changes]"
+}'
+```
+
+**Recovery:**
+```bash
+# List recent backups
+pomera-mcp --call pomera_notes --args '{"action": "list", "limit": 20}'
+
+# Get specific backup
+pomera-mcp --call pomera_notes --args '{"action": "get", "note_id": <id>}'
+```
 
 ### Git Conventions
 

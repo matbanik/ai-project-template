@@ -8,8 +8,6 @@ description: Git workflow and branch conventions for this project
 
 **IMPORTANT: Always use the `main` branch for all commits and pushes.**
 
-The production deployment on Cloudflare Pages is configured to deploy from `main`.
-
 ## Standard Git Commands
 
 **IMPORTANT: Do NOT commit or push changes to GitHub without explicit user instructions.**
@@ -41,6 +39,24 @@ Use conventional commits:
 - `style(scope):` - Formatting
 - `refactor(scope):` - Code restructure
 - `chore(scope):` - Maintenance
+
+## Before Major Changes
+
+**Always backup to Pomera before:**
+- Deleting files
+- Large-scale refactoring (>50% of file)
+- Converting between languages
+- Restructuring directories
+
+```bash
+# Backup before major changes
+pomera-mcp --call pomera_notes --args '{
+  "action": "save",
+  "title": "Backup/{filename}-{date}",
+  "input_content": "<file content>",
+  "output_content": "Backup before: [reason]"
+}'
+```
 
 ## DO NOT USE
 

@@ -46,50 +46,50 @@ BATCH_SIZE = 50
 def sync_account(account: str, label_name: str, existing_ids: set) -> dict:
     """
     Sync emails from a single account.
-    
+
     Args:
         account: Account name
         label_name: Gmail label to fetch
         existing_ids: Set of existing email IDs
-        
+
     Returns:
         Dict with sync stats
     """
     print(f"\n--- Syncing account: {account} ---")
-    
+
     try:
         service = get_gmail_service(account)
     except Exception as e:
         print(f"  Error authenticating: {e}")
         return {"account": account, "new": 0, "error": str(e)}
-    
+
     batch = []
     total_new = 0
     platform_counts = {}
-    
+
     for email_data in fetch_emails_by_label(service, label_name, existing_ids):
         # Enrich with platform detection + account info
         enriched = enrich_email(email_data)
         enriched['account'] = account
         batch.append(enriched)
-        
+
         # Track platform counts
         platform = enriched.get("platform", "unknown")
         platform_counts[platform] = platform_counts.get(platform, 0) + 1
-        
+
         # Insert in batches for efficiency
         if len(batch) >= BATCH_SIZE:
             upsert_emails_batch(batch)
             total_new += len(batch)
             print(f"  Saved batch of {len(batch)} emails (total new: {total_new})")
             batch = []
-    
+
     # Insert remaining emails
     if batch:
         upsert_emails_batch(batch)
         total_new += len(batch)
         print(f"  Saved final batch of {len(batch)} emails")
-    
+
     return {
         "account": account,
         "new": total_new,
@@ -120,9 +120,9 @@ def main():
         help="Sync all accounts (default behavior)"
     )
     args = parser.parse_args()
-    
+
     label_name = args.label
-    
+
     # Determine which accounts to sync
     if args.account:
         accounts = [args.account]
@@ -134,55 +134,55 @@ def main():
     print("=" * 60)
     print(f"Accounts: {', '.join(accounts)}")
     print(f"Label: {label_name}")
-    
+
     # Initialize database
     print("\n[1/3] Initializing database...")
     init_database()
-    
+
     initial_count = get_email_count()
     print(f"Current email count: {initial_count}")
-    
+
     last_sync = get_last_sync_timestamp()
     if last_sync:
         print(f"Last sync: {last_sync.strftime('%Y-%m-%d %H:%M:%S')}")
-    
+
     # Get existing IDs for incremental sync (shared across accounts)
     print("\n[2/3] Checking for existing emails...")
     existing_ids = get_existing_ids()
     print(f"Found {len(existing_ids)} existing emails in database")
-    
+
     # Sync each account
     print(f"\n[3/3] Fetching emails with label '{label_name}'...")
-    
+
     all_results = []
     for account in accounts:
         result = sync_account(account, label_name, existing_ids)
         all_results.append(result)
-    
+
     # Update sync timestamp
     set_last_sync_timestamp(datetime.now())
-    
+
     # Summary
     final_count = get_email_count()
     total_new = sum(r["new"] for r in all_results)
-    
+
     print("\n" + "=" * 60)
     print("SYNC COMPLETE")
     print("=" * 60)
-    
+
     for result in all_results:
         status = "✓" if not result.get("error") else "✗"
         print(f"  {status} {result['account']:15s} {result['new']:5d} new emails")
         if result.get("platforms"):
             for platform, count in sorted(result["platforms"].items(), key=lambda x: -x[1]):
                 print(f"      {platform:20s} {count}")
-    
+
     print("-" * 60)
     print(f"Total new emails:  {total_new}")
     print(f"Total in database: {final_count}")
     print(f"Database file:     emails.db")
     print("=" * 60)
-    
+
     # Sample query with platform info
     if final_count > 0:
         print("\nSample query - most recent 5 emails:")

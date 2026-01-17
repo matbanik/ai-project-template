@@ -19,7 +19,7 @@ SENDER_PATTERNS: Dict[str, str] = {
     "noreply@hashnode.com": "hashnode",
     "no-reply@blogger.com": "blogger",
     "contact@hackernoon.com": "hackernoon",
-    
+
     # Social Media
     "messages-noreply@linkedin.com": "linkedin",
     "noreply@discordapp.com": "discord",
@@ -29,7 +29,7 @@ SENDER_PATTERNS: Dict[str, str] = {
     "notification@facebookmail.com": "facebook",
     "notify@x.com": "x",
     "security@mail.instagram.com": "instagram",
-    
+
     # Newsletter
     "buttondown": "buttondown",  # Pattern match
 }
@@ -74,56 +74,56 @@ NOTIFICATION_KEYWORDS: Dict[str, list] = {
 def detect_platform(sender: str) -> str:
     """
     Detect platform from email sender address.
-    
+
     Args:
         sender: Full sender string (e.g., "TradingView <noreply@tradingview.com>")
-        
+
     Returns:
         Platform identifier or 'unknown'
     """
     sender_lower = sender.lower()
-    
+
     # First, try exact matches
     for pattern, platform in SENDER_PATTERNS.items():
         if pattern.lower() in sender_lower:
             return platform
-    
+
     # Then try regex patterns
     for pattern, platform in SENDER_REGEX.items():
         if re.search(pattern, sender_lower, re.IGNORECASE):
             return platform
-    
+
     return "unknown"
 
 
 def detect_notification_type(subject: str, body: str = "") -> str:
     """
     Detect notification type from subject and body.
-    
+
     Args:
         subject: Email subject
         body: Email body (optional)
-        
+
     Returns:
         Notification type (comment, reply, mention, like, follow, dm, share, or general)
     """
     text = f"{subject} {body}".lower()
-    
+
     for ntype, keywords in NOTIFICATION_KEYWORDS.items():
         for keyword in keywords:
             if keyword in text:
                 return ntype
-    
+
     return "general"
 
 
 def extract_urls(body: str) -> list[str]:
     """
     Extract URLs from email body.
-    
+
     Args:
         body: Email body text
-        
+
     Returns:
         List of URLs found
     """
@@ -134,16 +134,16 @@ def extract_urls(body: str) -> list[str]:
 def extract_original_post_url(body: str, platform: str) -> Optional[str]:
     """
     Extract the URL of the original post being commented on.
-    
+
     Args:
         body: Email body
         platform: Platform identifier
-        
+
     Returns:
         Original post URL or None
     """
     urls = extract_urls(body)
-    
+
     # Platform-specific URL patterns
     patterns = {
         "tradingview": r"tradingview\.com/(chart|i)/",
@@ -155,39 +155,39 @@ def extract_original_post_url(body: str, platform: str) -> Optional[str]:
         "devto": r"dev\.to/.+/[a-z0-9-]+",
         "github": r"github\.com/.+/(issues|discussions|pull)/",
     }
-    
+
     pattern = patterns.get(platform)
     if pattern:
         for url in urls:
             if re.search(pattern, url, re.IGNORECASE):
                 return url
-    
+
     # Fallback: return first URL that isn't unsubscribe/settings
     for url in urls:
         if not any(x in url.lower() for x in ['unsubscribe', 'settings', 'manage', 'preferences']):
             return url
-    
+
     return None
 
 
 def enrich_email(email_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Enrich email data with platform detection and extracted metadata.
-    
+
     Args:
         email_data: Dict with sender, subject, body
-        
+
     Returns:
         Enriched dict with platform, notification_type, original_url
     """
     sender = email_data.get("sender", "")
     subject = email_data.get("subject", "")
     body = email_data.get("body", "")
-    
+
     platform = detect_platform(sender)
     notification_type = detect_notification_type(subject, body)
     original_url = extract_original_post_url(body, platform)
-    
+
     return {
         **email_data,
         "platform": platform,
@@ -303,7 +303,7 @@ if __name__ == "__main__":
         ("Medium Daily Digest <noreply@medium.com>", "Someone replied to your story"),
         ("LinkedIn <messages-noreply@linkedin.com>", "John Doe mentioned you"),
     ]
-    
+
     for sender, subject in test_cases:
         platform = detect_platform(sender)
         ntype = detect_notification_type(subject)

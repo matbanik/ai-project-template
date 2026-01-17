@@ -78,7 +78,7 @@ Before researching each question, ask:
 - [ ] What are the current top 5 platforms by market share?
 - [ ] What pricing tiers exist? (determines comparison structure)
 
-### P2 - Core Questions  
+### P2 - Core Questions
 - [ ] What are each platform's unique features?
 - [ ] What are documented limitations of each?
 - [ ] What do power users say about each?

@@ -1,18 +1,56 @@
 {
+  "_readme": "API credentials - each entry shows which scripts use it via _used_by field",
   "google_search": {
     "api_key": "YOUR_GOOGLE_API_KEY_HERE",
     "cse_id": "YOUR_CUSTOM_SEARCH_ENGINE_ID",
     "_comment": "Google Custom Search API - 100 free queries/day",
-    "_setup": "Get key at https://console.cloud.google.com/apis/credentials, create CSE at https://programmablesearchengine.google.com/"
+    "_setup": "Get key at https://console.cloud.google.com/apis/credentials, create CSE at https://programmablesearchengine.google.com/",
+    "_used_by": [
+      "tools/web_search.py"
+    ]
   },
   "brave_search": {
     "api_key": "YOUR_BRAVE_API_KEY_HERE",
     "_comment": "Brave Search API - 2000 free queries/month",
-    "_setup": "Get key at https://brave.com/search/api/"
+    "_setup": "Get key at https://brave.com/search/api/",
+    "_used_by": [
+      "tools/web_search.py"
+    ]
   },
   "context7": {
-    "api_key": "YOUR_CONTEXT7_API_KEY_HERE",
-    "_comment": "Context7 API - Code documentation and library search",
-    "_setup": "Get key at https://context7.io/"
+    "_comment": "Context7 - MCP server, no API key needed. Configure in mcp_settings.json instead.",
+    "_setup": "Add to mcp_settings.json: \"context7\": { \"type\": \"http\", \"url\": \"https://context7.liam.sh/mcp\" }",
+    "_used_by": [
+      "mcp_settings.json (MCP server, not CLI)"
+    ]
+  },
+  "gmail_oauth": {
+    "_comment": "Gmail API uses OAuth2, not API keys. Credentials stored per-account in tools/email/{account}/",
+    "_setup": "1. Create OAuth Desktop App at https://console.cloud.google.com/apis/credentials\n2. Enable Gmail API at https://console.cloud.google.com/apis/library/gmail.googleapis.com\n3. Download client_secret*.json to tools/email/{account_name}/\n4. Run 'python tools/email/auth.py {account_name}' to authorize\n5. token.pickle will be created after OAuth flow",
+    "_used_by": [
+      "tools/email/auth.py",
+      "tools/email/fetch.py",
+      "tools/email/main.py",
+      "tools/email/email_fetcher.py"
+    ],
+    "_accounts": {
+      "_example_personal": "tools/email/personal/client_secret*.json",
+      "_example_work": "tools/email/work/client_secret*.json"
+    }
+  },
+  "microsoft_graph": {
+    "application_id": "YOUR_AZURE_APP_ID_HERE",
+    "tenant_id": "YOUR_AZURE_TENANT_ID_HERE",
+    "authority": "https://login.microsoftonline.com/YOUR_AZURE_TENANT_ID_HERE",
+    "client_secret": "YOUR_CLIENT_SECRET_HERE",
+    "target_mailbox": "user@yourdomain.com",
+    "_comment": "Microsoft Graph API for Outlook/Office 365 email access",
+    "_setup": "1. Register app at https://portal.azure.com/#view/Microsoft_AAD_RegisteredApps\n2. Add API permission: Microsoft Graph > Mail.Read (Application)\n3. Create client secret under Certificates & secrets\n4. Grant admin consent for the permissions",
+    "_used_by": [
+      "tools/email/microsoft/test_mailbox.py"
+    ],
+    "_scopes": [
+      "https://graph.microsoft.com/.default"
+    ]
   }
 }

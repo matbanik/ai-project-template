@@ -1,5 +1,5 @@
 ---
-description: 
+description:
 ---
 
 # Writing Hooks for Hobby Pages
@@ -187,17 +187,17 @@ Action:    What to do next
 
 ## Anti-Patterns (Avoid These)
 
-❌ **Too generic**: "Welcome to my hiking page"  
-❌ **Too salesy**: "Buy now for amazing results!"  
-❌ **Too long**: Hooks over 2 sentences lose impact  
-❌ **Jargon-heavy**: "Optimize your nutritional macros"  
+❌ **Too generic**: "Welcome to my hiking page"
+❌ **Too salesy**: "Buy now for amazing results!"
+❌ **Too long**: Hooks over 2 sentences lose impact
+❌ **Jargon-heavy**: "Optimize your nutritional macros"
 ❌ **No emotion**: Flat, factual statements without energy
 
 
 
 # README files and larger content that comes after the HOOK
 
-## Consolidated Research 
+## Consolidated Research
 
 ### 2-3 Strategic Searches Only
 
@@ -344,4 +344,3 @@ competitor:
 | Gap in all 3 | **OPPORTUNITY** (prioritize) |
 
 ---
-

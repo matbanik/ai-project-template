@@ -51,28 +51,28 @@ def find_client_secret(directory: Path) -> Optional[Path]:
 def get_credentials(account: str = 'matbanik') -> Credentials:
     """
     Get valid OAuth2 credentials for specified account.
-    
+
     Args:
         account: Account name ('matbanik' or 'banikm')
-    
+
     Returns:
         Valid Credentials object.
     """
     if account not in ACCOUNTS:
         available = ', '.join(ACCOUNTS.keys())
         raise ValueError(f"Unknown account '{account}'. Available: {available}")
-    
+
     account_dir = ACCOUNTS[account]
     token_file = account_dir / 'token.pickle'
     client_secret_file = find_client_secret(account_dir)
-    
+
     creds = None
-    
+
     # Load existing token if available
     if token_file.exists():
         with open(token_file, 'rb') as token:
             creds = pickle.load(token)
-    
+
     # If no valid credentials, get new ones
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -89,29 +89,29 @@ def get_credentials(account: str = 'matbanik') -> Credentials:
                     "4. Create OAuth credentials (APIs & Services → Credentials → Create → OAuth client ID → Desktop app)\n"
                     f"5. Download JSON and save in {account_dir}/\n"
                 )
-            
+
             print(f"[{account}] Starting OAuth2 authorization flow...")
             print("A browser window will open for you to authorize access.")
             flow = InstalledAppFlow.from_client_secrets_file(
                 str(client_secret_file), SCOPES
             )
             creds = flow.run_local_server(port=0)
-        
+
         # Save credentials for next run
         with open(token_file, 'wb') as token:
             pickle.dump(creds, token)
         print(f"[{account}] Credentials saved to {token_file}")
-    
+
     return creds
 
 
 def get_gmail_service(account: str = 'matbanik'):
     """
     Build and return an authenticated Gmail API service.
-    
+
     Args:
         account: Account name ('matbanik' or 'banikm')
-    
+
     Returns:
         Gmail API service object.
     """
@@ -127,13 +127,13 @@ def get_all_accounts() -> list[str]:
 
 if __name__ == '__main__':
     import sys
-    
+
     # Allow testing specific account
     if len(sys.argv) > 1:
         accounts = [sys.argv[1]]
     else:
         accounts = get_all_accounts()
-    
+
     for account in accounts:
         print(f"\nTesting account: {account}")
         try:

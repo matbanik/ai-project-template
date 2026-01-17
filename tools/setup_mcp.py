@@ -179,23 +179,23 @@ IDE_MCP_CONFIGS = {
 def find_project_root() -> Path:
     """Find project root by looking for mcp_settings.json or .git."""
     current = Path.cwd()
-    
+
     for parent in [current] + list(current.parents):
         if (parent / "mcp_settings.json").exists():
             return parent
         if (parent / ".git").exists():
             return parent
-    
+
     return current
 
 
 def load_mcp_settings(project_root: Path) -> dict:
     """Load MCP settings from project configuration."""
     settings_file = project_root / "mcp_settings.json"
-    
+
     if not settings_file.exists():
         return {}
-    
+
     with open(settings_file, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -204,7 +204,7 @@ def detect_running_ide() -> list[str]:
     """Detect which IDEs are currently running."""
     detected = []
     system = platform.system()
-    
+
     try:
         if system == "Windows":
             # Use tasklist on Windows
@@ -224,16 +224,16 @@ def detect_running_ide() -> list[str]:
                 timeout=10
             )
             running_processes = result.stdout.lower()
-        
+
         for ide_key, config in IDE_MCP_CONFIGS.items():
             for process_name in config["process_names"]:
                 if process_name.lower() in running_processes:
                     detected.append(ide_key)
                     break
-    
+
     except Exception as e:
         print(f"Warning: Could not detect running processes: {e}")
-    
+
     # Also check environment variables
     env_vars = " ".join(os.environ.keys())
     for ide_key, config in IDE_MCP_CONFIGS.items():
@@ -243,7 +243,7 @@ def detect_running_ide() -> list[str]:
             if marker in env_vars:
                 detected.append(ide_key)
                 break
-    
+
     return detected
 
 
@@ -266,7 +266,7 @@ def check_mcp_tools_installed() -> dict:
             "install": "npm install -g npm (comes with Node.js)",
         },
     }
-    
+
     for tool_name, tool_info in tools.items():
         try:
             result = subprocess.run(
@@ -289,17 +289,17 @@ def check_mcp_tools_installed() -> dict:
                 tool_info["installed"] = result.returncode == 0
             except Exception:
                 tool_info["installed"] = False
-    
+
     return tools
 
 
 def format_config_for_ide(mcp_settings: dict, ide_key: str) -> str:
     """Format MCP settings for a specific IDE's configuration format."""
     servers = mcp_settings.get("mcpServers", {})
-    
+
     # Most IDEs use this format
     config = {"mcpServers": {}}
-    
+
     for server_name, server_config in servers.items():
         # Remove internal fields
         clean_config = {
@@ -307,7 +307,7 @@ def format_config_for_ide(mcp_settings: dict, ide_key: str) -> str:
             if not k.startswith("_")
         }
         config["mcpServers"][server_name] = clean_config
-    
+
     return json.dumps(config, indent=2)
 
 
@@ -317,33 +317,33 @@ def show_setup_instructions(ide_key: str, mcp_settings: dict):
         print(f"Error: Unknown IDE '{ide_key}'")
         print(f"Supported IDEs: {', '.join(IDE_MCP_CONFIGS.keys())}")
         return
-    
+
     config = IDE_MCP_CONFIGS[ide_key]
     system = platform.system()
     config_path = config["config_paths"].get(system, "~/.config/mcp.json")
-    
+
     # Format the configuration JSON
     config_json = format_config_for_ide(mcp_settings, ide_key)
-    
+
     # For Zed, we need the inner mcpServers object only
     servers_only = mcp_settings.get("mcpServers", {})
     clean_servers = {}
     for name, srv in servers_only.items():
         clean_servers[name] = {k: v for k, v in srv.items() if not k.startswith("_")}
     config_json_inner = json.dumps(clean_servers, indent=4)
-    
+
     # Print header
     print("\n" + "=" * 60)
     print(f"🔧 MCP Setup for {config['name']}")
     print("=" * 60)
-    
+
     # Print prerequisites
     print("\n## Prerequisites\n")
     print("Before configuring your IDE, install the required tools:\n")
-    
+
     tools = check_mcp_tools_installed()
     all_installed = True
-    
+
     for tool_name, tool_info in tools.items():
         status = "✓" if tool_info["installed"] else "✗"
         print(f"  {status} {tool_name}: ", end="")
@@ -352,10 +352,10 @@ def show_setup_instructions(ide_key: str, mcp_settings: dict):
         else:
             print(f"NOT FOUND - Run: {tool_info['install']}")
             all_installed = False
-    
+
     if not all_installed:
         print("\n⚠️  Some tools are missing. Install them before proceeding.\n")
-    
+
     # Print IDE-specific instructions
     instructions = config["instructions"].format(
         config_path=config_path,
@@ -363,10 +363,10 @@ def show_setup_instructions(ide_key: str, mcp_settings: dict):
         config_json_inner=config_json_inner,
     )
     print(instructions)
-    
+
     # Print config file location
     print(f"\n📁 Configuration file: {config_path}")
-    
+
     if config_path.exists():
         print("   ⚠️  File exists - back it up before modifying!")
     else:
@@ -397,53 +397,53 @@ def main():
         action="store_true",
         help="Detect running IDEs"
     )
-    
+
     args = parser.parse_args()
-    
+
     # Find project root and load settings
     project_root = find_project_root()
     mcp_settings = load_mcp_settings(project_root)
-    
+
     if not mcp_settings:
         print("Error: mcp_settings.json not found in project root")
         print(f"Looked in: {project_root}")
         return 1
-    
+
     if args.list:
         print("\n📋 Supported IDEs:\n")
         for key, config in IDE_MCP_CONFIGS.items():
             print(f"  • {key:15s} - {config['name']}")
         print(f"\nUsage: python setup_mcp.py --ide <name>")
         return 0
-    
+
     if args.check:
         print("\n🔍 Checking MCP tool installation:\n")
         tools = check_mcp_tools_installed()
-        
+
         for tool_name, tool_info in tools.items():
             status = "✓" if tool_info["installed"] else "✗"
             print(f"  {status} {tool_name}")
             if not tool_info["installed"]:
                 print(f"     Install: {tool_info['install']}")
         return 0
-    
+
     if args.detect:
         print("\n🔍 Detecting running IDEs...\n")
         detected = detect_running_ide()
-        
+
         if detected:
             print(f"Found: {', '.join(detected)}")
         else:
             print("No supported IDEs detected running.")
         return 0
-    
+
     # Determine which IDE to show instructions for
     if args.ide:
         target_ide = args.ide
     else:
         # Auto-detect
         detected = detect_running_ide()
-        
+
         if not detected:
             print("\n🔍 No IDE detected automatically.\n")
             print("Please specify an IDE with --ide <name>\n")
@@ -451,13 +451,13 @@ def main():
             for key, config in IDE_MCP_CONFIGS.items():
                 print(f"  • {key:15s} - {config['name']}")
             return 1
-        
+
         if len(detected) > 1:
             print(f"\n🔍 Multiple IDEs detected: {', '.join(detected)}")
             print(f"Using first detected: {detected[0]}\n")
-        
+
         target_ide = detected[0]
-    
+
     show_setup_instructions(target_ide, mcp_settings)
     return 0
 

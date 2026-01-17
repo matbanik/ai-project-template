@@ -1,0 +1,30 @@
+# Pre-commit hooks for secret scanning and code quality
+# Install: pip install pre-commit && pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Gitleaks - Secret Detection
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+        name: 🔐 Detect secrets with Gitleaks
+        description: Prevents committing secrets and credentials
+
+  # Additional useful hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=5000']
+        name: 🐘 Check for large files
+      - id: check-json
+        name: ✅ Validate JSON
+      - id: check-yaml
+        name: ✅ Validate YAML
+      - id: end-of-file-fixer
+        name: 📄 Fix end of file
+      - id: trailing-whitespace
+        name: ✂️ Trim trailing whitespace
+      - id: detect-private-key
+        name: 🔑 Detect private keys

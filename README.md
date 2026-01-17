@@ -171,13 +171,13 @@ ai-project-template/
 
 ## FAQ
 
-**Q: Does this work with Claude Code only?**  
+**Q: Does this work with Claude Code only?**
 A: It's optimized for Claude Code, but the patterns work with any AI that can read markdown files. See our [rule-mapping workflow](./.agent/workflows/rule-mapping.md) for syncing to other IDEs.
 
-**Q: Is this overkill for small projects?**  
+**Q: Is this overkill for small projects?**
 A: Maybe! But once you've experienced AI that *remembers*, you won't go back.
 
-**Q: Can I use this commercially?**  
+**Q: Can I use this commercially?**
 A: Absolutely. MIT license. Go wild.
 
 ---
