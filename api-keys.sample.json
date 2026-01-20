@@ -17,13 +17,6 @@
       "tools/web_search.py"
     ]
   },
-  "context7": {
-    "_comment": "Context7 - MCP server, no API key needed. Configure in mcp_settings.json instead.",
-    "_setup": "Add to mcp_settings.json: \"context7\": { \"type\": \"http\", \"url\": \"https://context7.liam.sh/mcp\" }",
-    "_used_by": [
-      "mcp_settings.json (MCP server, not CLI)"
-    ]
-  },
   "gmail_oauth": {
     "_comment": "Gmail API uses OAuth2, not API keys. Credentials stored per-account in tools/email/{account}/",
     "_setup": "1. Create OAuth Desktop App at https://console.cloud.google.com/apis/credentials\n2. Enable Gmail API at https://console.cloud.google.com/apis/library/gmail.googleapis.com\n3. Download client_secret*.json to tools/email/{account_name}/\n4. Run 'python tools/email/auth.py {account_name}' to authorize\n5. token.pickle will be created after OAuth flow",
@@ -51,6 +44,30 @@
     ],
     "_scopes": [
       "https://graph.microsoft.com/.default"
+    ]
+  },
+  "serper": {
+    "api_key": "YOUR_SERPER_API_KEY_HERE",
+    "_comment": "Serper - Google SERP API, 2500 free queries (no CC required)",
+    "_setup": "Get key at https://serper.dev/",
+    "_used_by": [
+      "tools/web_search.py"
+    ]
+  },
+  "tavily": {
+    "api_key": "YOUR_TAVILY_API_KEY_HERE",
+    "_comment": "Tavily - AI-optimized search, 1000 free calls/month",
+    "_setup": "Get key at https://tavily.com/",
+    "_used_by": [
+      "tools/web_search.py"
+    ]
+  },
+  "serpapi": {
+    "api_key": "YOUR_SERPAPI_KEY_HERE",
+    "_comment": "SerpApi - Multi-engine SERP, 100 free searches",
+    "_setup": "Get key at https://serpapi.com/",
+    "_used_by": [
+      "tools/web_search.py"
     ]
   }
 }

@@ -98,6 +98,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # ===== Project-Specific =====
+# Web search results
+searches/
+
 # Account-specific email directories
 tools/email/*/
 

@@ -25,7 +25,7 @@ Title: Deleted/{filename}-{YYYY-MM-DD}
 
 input_content: [FULL FILE CONTENT - not just the path!]
 
-output_content: 
+output_content:
 - Reason for deletion
 - Backup location (if using mcp_backup)
 - Any lessons learned

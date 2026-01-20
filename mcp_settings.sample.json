@@ -1,0 +1,52 @@
+{
+  "mcpServers": {
+    "backup": {
+      "timeout": 60,
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "{mcp_tools_dir}/MCP-Backup-Server/dist/index.js"
+      ],
+      "env": {
+        "BACKUP_DIR": "./.code_backups",
+        "EMERGENCY_BACKUP_DIR": "./.code_emergency_backups",
+        "MAX_VERSIONS": "50"
+      }
+    },
+    "pomera": {
+      "timeout": 60,
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "pomera-ai-commander",
+        "--mcp-server"
+      ]
+    },
+    "text-editor": {
+      "timeout": 60,
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-text-editor"
+      ]
+    },
+    "sequential-thinking": {
+      "timeout": 60,
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "markdownify": {
+      "timeout": 60,
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "{mcp_tools_dir}/markdownify-mcp/dist/index.js"
+      ]
+    }
+  }
+}
