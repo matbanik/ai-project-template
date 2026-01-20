@@ -8,10 +8,10 @@ description: MCP server management - when to enable/disable for token optimizati
 
 | Tier | Servers | When to Enable |
 |------|---------|----------------|
-| **CORE** | pomera | Always (notes, backup, memory) |
+| **CORE** | pomera | Always (notes, session logs, text tools) |
 | **CODING** | text-editor, sequential-thinking | Complex code edits, debugging |
 | **RESEARCH** | markdownify | Content conversion |
-| **SAFETY** | MCP-Backup-Server | Before risky operations |
+| **SAFETY** | backup | Before risky operations |
 
 ---
 
@@ -35,14 +35,11 @@ npx mcpick
 
 ---
 
-## In-Session Toggle
+## In-Session Toggle (IDE-dependent)
 
 ```bash
-# Antigravity / Claude Code
-/mcp  # Opens server management menu
-
-# Or use @ menu → MCP Servers → Toggle
-# Note: Changes reset on restart
+# Many IDEs provide a UI/command to toggle MCP servers mid-session.
+# If not available, use `npx mcpick` pre-session.
 ```
 
 ---
@@ -52,14 +49,14 @@ npx mcpick
 | Preset | Servers | ~Tokens | Use For |
 |--------|---------|---------|---------|
 | **Minimal** | pomera | 600 | Simple Q&A, quick edits |
-| **Coding** | pomera, text-editor, thinking | 1300 | Refactoring, debugging |
+| **Coding** | pomera, text-editor, sequential-thinking | 1300 | Refactoring, debugging |
 | **Research** | pomera, markdownify | 1400 | Content conversion |
 | **Safety** | pomera, backup | 1000 | Before risky operations |
 | **Full** | All servers | 2000+ | Major projects |
 
 ---
 
-## MCP-Backup-Server
+## backup (MCP-Backup-Server)
 
 Agent-triggered file snapshots before risky operations.
 
@@ -67,13 +64,41 @@ Agent-triggered file snapshots before risky operations.
 # Install
 git clone https://github.com/hexitex/MCP-Backup-Server
 cd MCP-Backup-Server && npm install && npm run build
-
-# Configuration (in mcp_settings.json)
-# BACKUP_DIR: ./.code_backups
-# MAX_VERSIONS: 50
 ```
 
-**When to trigger backup:**
+### ⚠️ CRITICAL: Windows Path Configuration
+
+**The MCP backup server MUST use absolute paths.** Relative paths (like `./.code_backups`) cause the server to crash because the MCP server's working directory is unknown and likely not your project folder.
+
+**Symptom of misconfiguration:**
+```
+Error: invalid character 'C' looking for beginning of value
+```
+This JSON parsing error occurs when the restore operation encounters Windows paths (starting with `C:\`) while the server expects relative paths.
+
+**Fix: Use absolute paths in MCP config**
+
+Edit your IDE's MCP settings (e.g., `mcp_settings.json` or equivalent):
+
+```json
+"backup": {
+  "command": "node",
+  "args": ["C:/path/to/MCP-Backup-Server/build/index.js"],
+  "env": {
+    "BACKUP_DIR": "C:/Users/YourUsername/.code_backups",
+    "EMERGENCY_BACKUP_DIR": "C:/Users/YourUsername/.code_emergency_backups",
+    "MAX_VERSIONS": "50"
+  }
+}
+```
+
+**Key points:**
+- Use forward slashes (`/`) in paths, not backslashes
+- Create the backup directories before first use
+- Replace `YourUsername` with your actual Windows username
+
+### When to trigger backup
+
 - Before refactoring >50% of a file
 - Before bulk find/replace
 - Before directory restructuring
