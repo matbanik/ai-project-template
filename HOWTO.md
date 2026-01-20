@@ -204,11 +204,19 @@ The template includes `.vscode/settings.json` pre-configured for Conda:
 
 ### What is MCP?
 
-Model Context Protocol (MCP) extends Claude's capabilities with specialized tools. This template configures three MCP servers:
+Model Context Protocol (MCP) extends AI capabilities with specialized tools. This template configures **5 MCP servers**:
 
-### Available Servers
+| Server | Purpose | When to Enable |
+|--------|---------|----------------|
+| `pomera` | Text tools, notes, session memory | Always (default) |
+| `text-editor` | Hash-based conflict-detected edits | Complex multi-file edits |
+| `sequential-thinking` | Step-by-step problem analysis | Complex planning, debugging |
+| `backup` | File/folder backup with versioning | Risky operations, refactoring |
+| `markdownify` | Convert web/docs to markdown | Research, content conversion |
 
-#### 1. Pomera Server (22 Text Tools)
+### Server Details
+
+#### 1. Pomera Server (22+ Text Tools)
 
 Comprehensive text processing and persistent memory:
 
@@ -238,9 +246,7 @@ Advanced file editing with conflict detection:
 
 **Setup:**
 ```bash
-# Requires Python's uv package manager
-pip install uv
-# Then uvx runs mcp-text-editor automatically when needed
+pip install uv  # uvx runs mcp-text-editor automatically
 ```
 
 #### 3. Sequential Thinking Server
@@ -253,48 +259,58 @@ Structured problem-solving with revision capability:
 
 **Setup:**
 ```bash
-# Global install (recommended)
-npm install -g @modelcontextprotocol/server-sequential-thinking
-
-# Or use npx for one-time runs (no install needed)
 npx -y @modelcontextprotocol/server-sequential-thinking
+```
+
+#### 4. Backup Server
+
+File and folder versioning with emergency recovery:
+
+- Automatic backup before risky operations
+- Timestamped versions with restore capability
+- Emergency backup directory for critical recovery
+
+**Setup:**
+```bash
+# Clone and build
+cd ~/mcp-tools
+git clone https://github.com/hexitex/MCP-Backup-Server.git
+cd MCP-Backup-Server
+npm install && npm run build
+```
+
+#### 5. Markdownify Server
+
+Convert web content and documents to markdown:
+
+- Webpage to markdown extraction
+- PDF, DOCX, XLSX conversion
+- YouTube transcript extraction
+
+**Setup:**
+```bash
+# Clone and build (requires pnpm)
+cd ~/mcp-tools
+git clone https://github.com/zcaceres/markdownify-mcp.git
+cd markdownify-mcp
+pnpm install && pnpm run build
 ```
 
 ### Quick Install All MCP Tools
 
 ```bash
-# Node.js-based tools
-npm install -g pomera-ai-commander
-npm install -g @modelcontextprotocol/server-sequential-thinking
+# Use setup script for guided installation
+python tools/setup_mcp.py --install
 
-# Python-based tool
+# Or manually:
+npm install -g pomera-ai-commander
 pip install uv
 ```
 
-### MCP Configuration
+### Toggle Servers On/Off
 
-Edit `mcp_settings.json` with your paths:
-
-```json
-{
-  "mcpServers": {
-    "pomera": {
-      "command": "D:/Pomera/pomera.exe",
-      "args": ["--mcp-server"],
-      "timeout": 60
-    },
-    "text-editor": {
-      "command": "uvx",
-      "args": ["mcp-text-editor"],
-      "timeout": 60
-    },
-    "sequential-thinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "timeout": 60
-    }
-  }
-}
+```bash
+npx mcpick  # Interactive server selection
 ```
 
 ---
@@ -305,23 +321,27 @@ Edit `mcp_settings.json` with your paths:
 
 | Engine | Free Tier | Best For |
 |--------|-----------|----------|
-| **Brave Search** | 2000/month | General queries, default choice |
+| **Tavily** | 1000/month | AI-optimized results (default) |
+| **Brave Search** | 2000/month | General queries, privacy-focused |
 | **Google Custom Search** | 100/day | Complex queries, commercial intent |
-| **Context7** | Varies | Code/library documentation |
+| **DuckDuckGo** | Unlimited | Fallback, no API key needed |
 
 ### Usage
 
 ```bash
-# Basic search (defaults to Brave)
+# Basic search (defaults to Tavily)
 python tools/web_search.py "your query"
 
 # Specify engine
+python tools/web_search.py "query" --engine tavily
 python tools/web_search.py "query" --engine brave
 python tools/web_search.py "query" --engine google
-python tools/web_search.py "pandas dataframe tutorial" --engine context7
 
 # More results
 python tools/web_search.py "query" --count 10
+
+# Save to file with task name
+python tools/web_search.py "query" -o searches/ -t research-topic
 
 # JSON output for processing
 python tools/web_search.py "query" --json
@@ -329,11 +349,11 @@ python tools/web_search.py "query" --json
 
 ### API Key Setup
 
-1. **Brave Search:** https://brave.com/search/api/
-2. **Google Custom Search:**
+1. **Tavily:** https://tavily.com/ (AI-optimized, recommended default)
+2. **Brave Search:** https://brave.com/search/api/
+3. **Google Custom Search:**
    - API Key: https://console.cloud.google.com/apis/credentials
    - Search Engine ID: https://programmablesearchengine.google.com/
-3. **Context7:** https://context7.io/
 
 Edit `api-keys.json` with your credentials.
 
@@ -396,83 +416,53 @@ See `tools/email/` for a complete example of:
 
 ---
 
-## Workflow Templates
+## Available Workflows
 
-### Coding Projects
+All workflows are accessible via `/workflow-name` slash commands. Type the command in chat to load detailed instructions.
 
-```markdown
-## Session Startup
-1. Check pomera notes for previous session state
-2. Review current-focus.md for active tasks
-3. Run validation: `python tools/validate_site.py`
+### Core Workflows
 
-## Before Major Changes
-1. Save original code to pomera_notes
-2. Create todo list with implementation steps
-3. Make changes incrementally, validating each step
+| Command | Purpose |
+|---------|---------|
+| `/mcp-workflows` | MCP servers, mcpick, backup tools |
+| `/file-organization-workflow` | Git, backups, project structure |
+| `/git-workflow` | Git conventions, branching strategies |
+| `/text-workflows` | Text processing with pomera tools |
+| `/pomera-notes-workflow` | Pomera notes for backup/memory |
+| `/session-log` | Log prompts/responses to Pomera |
 
-## Before Commits
-1. Run all validations
-2. Review changes with git diff
-3. Use conventional commit format
+### Research & Writing Workflows
+
+| Command | Purpose |
+|---------|---------|
+| `/web-search-workflow` | Engine selection, result logging |
+| `/content-conversion-workflow` | Markdownify, web content extraction |
+| `/research-project` | End-to-end research workflows |
+| `/creative-writing` | Creative writing assistance |
+| `/writing-hooks` | Writing hooks and CTAs |
+| `/readme-writing` | GitHub README best practices |
+| `/keyword-guide` | SEO keyword research |
+
+### Development Workflows
+
+| Command | Purpose |
+|---------|---------|
+| `/data-analysis` | Data analysis and visualization |
+| `/rule-mapping` | AI rules sync across IDEs |
+| `/meta-review` | Review workflow documents for quality |
+
+### Quick Reference
+
 ```
-
-### Data Analysis Projects
-
-```markdown
-## Data Ingestion
-1. Create SQLite schema matching your data structure
-2. Batch insert with executemany() for efficiency
-3. Add indexes on columns you'll filter/sort by
-
-## Analysis Workflow
-1. Start with SQL queries to understand data shape
-2. Export relevant subsets for AI analysis
-3. Use pandas for complex transformations
-4. Save insights to pomera_notes
-
-## Reporting
-1. Generate visualizations with matplotlib/plotly
-2. Export summaries in markdown
-3. Archive analysis in dated notes
-```
-
-### Creative Writing Projects
-
-```markdown
-## Research Phase
-1. Use web_search.py to gather source material
-2. Save research snippets to pomera_notes
-3. Extract key themes with pomera_word_frequency
-
-## Writing Phase
-1. Create outline in pomera_notes
-2. Draft sections, saving versions as you go
-3. Use pomera_text_stats for word count targets
-
-## Revision Phase
-1. Compare draft versions with pomera_list_compare
-2. Check for overused words with word_frequency
-3. Save final version with clear title
-```
-
-### Research Projects
-
-```markdown
-## Source Collection
-1. Search with multiple engines (Brave, Google, Context7)
-2. Extract URLs and save to pomera_notes
-3. Fetch and summarize key pages
-
-## Analysis
-1. Use sequential_thinking for complex topics
-2. Compare sources with list_compare
-3. Build structured notes with markdown tools
-
-## Synthesis
-1. Aggregate findings in dated notes
-2. Generate summary with key citations
-3. Archive research trail for reproducibility
+┌──────────────────────────────────────────────────────────┐
+│  WORKFLOW CATEGORIES                                      │
+├──────────────────────────────────────────────────────────┤
+│  📁 Files:    /file-organization  /git-workflow          │
+│  🔧 Tools:    /mcp-workflows  /text-workflows            │
+│  📝 Writing:  /creative-writing  /readme-writing         │
+│  🔍 Research: /web-search-workflow  /research-project    │
+│  💾 Memory:   /pomera-notes-workflow  /session-log       │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ---
