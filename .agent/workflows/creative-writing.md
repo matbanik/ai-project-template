@@ -1,3 +1,7 @@
+---
+description: Creative writing workflow (research, outlining, drafting, revision)
+---
+
 # Creative Writing Workflow
 
 AI-guided workflow for creative writing projects: storytelling, blog posts, articles, and content creation.
@@ -19,7 +23,7 @@ AI-guided workflow for creative writing projects: storytelling, blog posts, arti
 python tools/web_search.py "topic research query" --engine brave
 
 # For code/technical topics
-python tools/web_search.py "topic documentation" --engine context7
+python tools/web_search.py "topic documentation" --engine google
 ```
 
 ### Save Research Notes

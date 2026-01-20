@@ -41,8 +41,8 @@ python tools/setup_mcp.py                  # Auto-detect IDE and get instruction
 python tools/setup_mcp.py --check          # Verify MCP tools are installed
 
 # 5. Configure API keys
-cp api-keys.json api-keys.local.json  # Edit with your keys
-# Add api-keys.local.json to .gitignore
+cp api-keys.sample.json api-keys.local.json  # Edit with your keys
+# (Already gitignored by default)
 
 # 6. Test web search
 python tools/web_search.py "test query"
@@ -355,7 +355,7 @@ python tools/web_search.py "query" --json
    - API Key: https://console.cloud.google.com/apis/credentials
    - Search Engine ID: https://programmablesearchengine.google.com/
 
-Edit `api-keys.json` with your credentials.
+Copy `api-keys.sample.json` to `api-keys.local.json` and edit with your credentials.
 
 ---
 
@@ -483,8 +483,9 @@ ai-project-template/
 │   ├── web_search.py         # Multi-engine web search
 │   └── email/                # Email processing example
 ├── AGENTS.md                  # AI guidance document
-├── api-keys.json             # API credentials (template)
-├── mcp_settings.json         # MCP server configuration
+├── api-keys.sample.json      # API credentials template (safe to commit)
+├── api-keys.local.json       # Your keys (gitignored)
+├── mcp_settings.sample.json  # MCP server configuration template
 └── README.md                 # Project overview
 ```
 
@@ -493,8 +494,9 @@ ai-project-template/
 | File | Purpose |
 |------|---------|
 | `AGENTS.md` | Comprehensive AI assistant guidance |
-| `api-keys.json` | API credentials (use `.local.json` for real keys) |
-| `mcp_settings.json` | MCP server paths and settings |
+| `api-keys.sample.json` | API credentials template (safe to commit) |
+| `api-keys.local.json` | Local API keys (gitignored) |
+| `mcp_settings.sample.json` | MCP server paths and settings (template) |
 | `.agent/context/*.md` | Session state for continuity |
 
 ---
@@ -504,7 +506,7 @@ ai-project-template/
 ### Credential Management
 
 1. **Never commit real API keys** - Use `api-keys.local.json` pattern
-2. **Add to .gitignore:**
+2. **Ensure these are in `.gitignore` (already included in this template):**
    ```
    api-keys.local.json
    *.pickle
@@ -520,7 +522,7 @@ ai-project-template/
 ```python
 import os
 
-# Instead of api-keys.json
+# Instead of api-keys.local.json
 BRAVE_API_KEY = os.environ.get('BRAVE_API_KEY')
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
 ```

@@ -34,6 +34,8 @@ Think of it as onboarding documentation for your silicon colleague. Instead of s
 
 ---
 
+Note: `tools/web_search.py` supports Tavily (default), Google, Brave, and DuckDuckGo. Context7 is MCP-only and requires separate IDE configuration.
+
 ## Who Is This For?
 
 - **Solo developers** who pair-program with AI daily
@@ -58,7 +60,7 @@ python tools/sync_rules.py --ide cline   # Teach your AI to read
 python tools/setup_mcp.py --check        # Give your AI superpowers
 
 # Configure your API keys
-cp api-keys.json api-keys.local.json
+cp api-keys.sample.json api-keys.local.json
 
 # Watch your AI actually understand your project
 ```

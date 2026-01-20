@@ -74,6 +74,9 @@ project_rules.md
 GEMINI.md
 .gemini/
 *.bak
+tools/backups/
+.code_backups/
+.code_emergency_backups/
 
 # ===== OS Files =====
 .DS_Store

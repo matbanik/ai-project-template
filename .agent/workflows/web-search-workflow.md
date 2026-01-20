@@ -78,14 +78,15 @@ For in-depth research:
 # 1. Search
 python tools/web_search.py "query" -o searches/ -t research-topic
 
-# 2. Read promising URLs
-read_url_content --Url "{url from results}"
+# 2. Read promising URLs (tool depends on your environment)
+# - If you have a URL->markdown tool (e.g., markdownify), use it
+# - Otherwise open in a browser and copy key excerpts
 
 # 3. Log combined findings
 pomera_notes save \
   --title "Research/{topic}/{date}" \
   --input_content "QUERY: {query}\nSOURCES: {urls}" \
-  --output_content "{extracted key content from read_url_content}"
+  --output_content "{key excerpts + notes}"
 ```
 
 ---
@@ -104,14 +105,14 @@ pomera_notes save \
 - Project-specific logic
 - Code already visible in files
 - Repeated searches same session
-- Simple syntax questions (use context7 instead)
+- Simple syntax questions (prefer local docs/Context7 if available)
 
 ---
 
 ## Context7 (MCP Only)
 
 For code documentation in AI editors:
-- Already configured in mcp_settings.json
+- Optional: configure a Context7 MCP server in your IDE (not included in this template by default)
 - Include "use context7" in prompts
 - Not available as CLI search
 - Best for: Library docs, API patterns, code examples

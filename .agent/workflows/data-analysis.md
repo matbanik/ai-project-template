@@ -1,3 +1,7 @@
+---
+description: Data analysis workflow using SQLite + Python with context budgeting
+---
+
 # Data Analysis Workflow
 
 AI-guided workflow for data analysis projects using SQLite, Python, and MCP tools.
@@ -288,7 +292,6 @@ sqlite3 analysis.db "SELECT * FROM clean_data LIMIT 5"
 -- Example: Top anomalies for AI to explain
 SELECT *
 FROM daily_summary
-WHERE avg_value > (SELECT AVG(avg_value) + 2*STDEV(avg_value) FROM daily_summary)
 ORDER BY avg_value DESC
 LIMIT 20;
 ```

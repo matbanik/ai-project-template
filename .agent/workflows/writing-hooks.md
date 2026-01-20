@@ -1,5 +1,5 @@
 ---
-description:
+description: Hooks, CTAs, and structure templates for landing pages and long-form writing
 ---
 
 # Writing Hooks for Hobby Pages
@@ -227,8 +227,8 @@ python tools/web_search.py "[topic] complete guide" --engine brave --count 10
 # Question-based keywords
 python tools/web_search.py "how to [topic]" --engine brave --count 10
 
-# Code/library documentation (Context7)
-python tools/web_search.py "[technical topic]" --engine context7
+# Code/library documentation (Context7 is MCP-only; otherwise use Google)
+python tools/web_search.py "[technical topic]" --engine google
 
 # Google for complex queries (100/day limit)
 python tools/web_search.py "[complex query]" --engine google

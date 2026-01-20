@@ -95,7 +95,7 @@ ls -la .agent/workflows/
 ## After Review
 
 1. Update AGENTS.md with improvements
-2. Commit changes: `git commit -m "docs: meta-review optimization"`
+2. If explicitly requested, commit changes: `git commit -m "docs: meta-review optimization"`
 3. Log review to pomera:
 ```bash
 pomera_notes save --title "Meta/Review/{date}" \

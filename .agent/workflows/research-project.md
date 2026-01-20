@@ -1,3 +1,7 @@
+---
+description: Research workflow (5W1H, prioritization, search, synthesis, reporting)
+---
+
 # Research Project Workflow
 
 AI-guided workflow for research projects: literature review, competitive analysis, topic exploration, and knowledge synthesis.
@@ -169,7 +173,7 @@ python tools/web_search.py "research topic" --engine brave
 python tools/web_search.py "detailed query" --engine google
 
 # Technical/code documentation
-python tools/web_search.py "library documentation" --engine context7
+python tools/web_search.py "library documentation" --engine google
 ```
 
 ### Multi-Engine Approach

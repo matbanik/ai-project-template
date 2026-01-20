@@ -1,3 +1,7 @@
+---
+description: Extract and validate SEO keywords from existing content
+---
+
 # Keyword Research from Content Guide
 
 This guide explains how to extract keywords from your existing content (PDFs, markdown files) and validate them using web search APIs to prioritize which keywords to target in blog posts.
@@ -58,8 +62,8 @@ The AI will:
 |-----|---------|------|
 | **Brave Search** | Initial keyword validation | 2000 free/month |
 | **Google Search** | Secondary validation | 100 free/day |
-| **ValueSERP** | Related searches + PAA | 100 free searches |
-| **Context7** | Technical/code topics | API key required |
+| **ValueSERP** | Related searches + PAA (optional external tool) | Varies |
+| **Context7** | Technical/code topics (optional MCP) | Varies |
 
 ---
 

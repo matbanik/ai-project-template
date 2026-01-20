@@ -63,12 +63,15 @@ When enabled, trigger with prompt:
 
 Backups stored in: `./.code_backups/`
 
-### Option 3: Git Snapshot
+### Option 3: Git Snapshot (stash)
 
 ```bash
-git add -A && git commit -m "WIP: pre-refactor snapshot"
-# Or create experiment branch
-git checkout -b experiment/feature-name
+# Create a local snapshot without committing
+git stash push -u -m "pre-refactor snapshot"
+git stash list
+
+# Restore later
+git stash pop
 ```
 
 ### Recovery
@@ -133,6 +136,8 @@ pomera_notes save --title "Deleted/{filepath}-{date}" \
 ---
 
 ## Native vs Shell Tools
+
+Tool names vary by IDE; treat this as a preference order, not a strict API.
 
 | Task | Prefer | Why |
 |------|--------|-----|

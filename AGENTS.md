@@ -89,7 +89,7 @@ Offer search if: current info needed, best practices, error resolution.
 | Task Type | Enable | Run |
 |-----------|--------|-----|
 | Simple Q&A | pomera only | `npx mcpick` |
-| Coding | + text-editor, thinking | |
+| Coding | + text-editor, sequential-thinking | |
 | Research | + markdownify | |
 | Risky ops | + backup server | |
 
@@ -99,7 +99,7 @@ Trigger if: deleting files, refactoring >50%, bulk replace, restructuring.
 ### 6. Complexity Estimate
 - Simple: 1-3 tools
 - Medium: 5-15 tools
-- Complex: 20+ tools → recommend `sequentialthinking`
+- Complex: 20+ tools → recommend enabling `sequential-thinking`
 
 ### 7. Automatic Prompt Recording
 **After significant work, log to Pomera:**
