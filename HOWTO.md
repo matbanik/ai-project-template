@@ -204,7 +204,7 @@ The template includes `.vscode/settings.json` pre-configured for Conda:
 
 ### What is MCP?
 
-Model Context Protocol (MCP) extends AI capabilities with specialized tools. This template configures **5 MCP servers**:
+Model Context Protocol (MCP) extends AI capabilities with specialized tools. This template configures **4 MCP servers**:
 
 | Server | Purpose | When to Enable |
 |--------|---------|----------------|
@@ -212,7 +212,6 @@ Model Context Protocol (MCP) extends AI capabilities with specialized tools. Thi
 | `text-editor` | Hash-based conflict-detected edits | Complex multi-file edits |
 | `sequential-thinking` | Step-by-step problem analysis | Complex planning, debugging |
 | `backup` | File/folder backup with versioning | Risky operations, refactoring |
-| `markdownify` | Convert web/docs to markdown | Research, content conversion |
 
 ### Server Details
 
@@ -279,22 +278,7 @@ cd MCP-Backup-Server
 npm install && npm run build
 ```
 
-#### 5. Markdownify Server
 
-Convert web content and documents to markdown:
-
-- Webpage to markdown extraction
-- PDF, DOCX, XLSX conversion
-- YouTube transcript extraction
-
-**Setup:**
-```bash
-# Clone and build (requires pnpm)
-cd ~/mcp-tools
-git clone https://github.com/zcaceres/markdownify-mcp.git
-cd markdownify-mcp
-pnpm install && pnpm run build
-```
 
 ### Quick Install All MCP Tools
 
@@ -436,7 +420,7 @@ All workflows are accessible via `/workflow-name` slash commands. Type the comma
 | Command | Purpose |
 |---------|---------|
 | `/web-search-workflow` | Engine selection, result logging |
-| `/content-conversion-workflow` | Markdownify, web content extraction |
+| `/content-conversion-workflow` | Web content extraction, format conversion |
 | `/research-project` | End-to-end research workflows |
 | `/creative-writing` | Creative writing assistance |
 | `/writing-hooks` | Writing hooks and CTAs |

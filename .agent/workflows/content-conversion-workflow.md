@@ -1,35 +1,19 @@
 ---
-description: Content conversion using markdownify MCP and Python tools
+description: Content conversion using web tools and pomera text processing
 ---
 
 # Content Conversion Workflow
 
-## Markdownify MCP Tools
+## Native Web Tools
 
-Enable with: "use markdownify" in prompt
-
-| Tool | Input | Output |
-|------|-------|--------|
-| `pdf-to-markdown` | PDF file | Markdown text |
-| `image-to-markdown` | Image file | Markdown with metadata |
-| `audio-to-markdown` | Audio file | Transcription as markdown |
-| `docx-to-markdown` | Word document | Markdown |
-| `xlsx-to-markdown` | Excel file | Markdown tables |
-| `pptx-to-markdown` | PowerPoint | Markdown slides |
-| `webpage-to-markdown` | URL | Clean markdown content |
-| `youtube-to-markdown` | YouTube URL | Video transcript |
-| `bing-search-to-markdown` | Search query | Results as markdown |
-
-## Python Web Tools
-
-### read_url_content (Native)
+### read_url_content (Built-in)
 
 ```bash
-# Built-in tool for fetching web content
+# Fetch and convert web content to markdown
 read_url_content --Url "https://example.com"
 ```
 
-Best for: Static pages, documentation, APIs
+Best for: Static pages, documentation, APIs, blog posts
 
 ### web_search.py
 
@@ -39,6 +23,16 @@ python tools/web_search.py "query" -o searches/ -t task-name
 ```
 
 Saves to: `searches/YYYY-MM-DD/HH-MM-SS-{engine}-{query}.json`
+
+## Pomera Text Processing Tools
+
+| Tool | Purpose |
+|------|---------|
+| `pomera_extract` | Extract URLs, emails, patterns from text |
+| `pomera_markdown` | Process markdown (strip, extract links/headers) |
+| `pomera_html` | Extract visible text from HTML |
+| `pomera_text_stats` | Word count, reading time |
+| `pomera_json_xml` | Validate/prettify JSON/XML |
 
 ## Conversion Workflow
 
@@ -75,9 +69,9 @@ pomera_extract --text "<content>" --type urls
 pomera_notes save \
   --title "Conversion/{type}/{date}-{source-name}" \
   --input_content "SOURCE: {file path or URL}
-FORMAT: {pdf/docx/audio/video/web}
-TOOL: {markdownify tool used}" \
-  --output_content "{converted markdown content}
+FORMAT: {web/text/json}
+TOOL: {tool used}" \
+  --output_content "{converted content}
 
 SUMMARY:
 - {key takeaway 1}
@@ -89,10 +83,10 @@ SUMMARY:
 | Task | Tool |
 |------|------|
 | Quick web fetch | `read_url_content` |
-| PDF/Office docs | `markdownify` MCP |
-| YouTube transcript | `markdownify` MCP |
 | Web search + save | `web_search.py -o` |
 | Extract patterns | `pomera_extract` |
+| Process HTML | `pomera_html` |
+| Markdown processing | `pomera_markdown` |
 
 ## Output Organization
 

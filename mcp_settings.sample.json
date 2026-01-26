@@ -39,14 +39,6 @@
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ]
-    },
-    "markdownify": {
-      "timeout": 60,
-      "type": "stdio",
-      "command": "node",
-      "args": [
-        "{mcp_tools_dir}/markdownify-mcp/dist/index.js"
-      ]
     }
   }
 }

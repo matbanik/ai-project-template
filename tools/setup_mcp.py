@@ -85,22 +85,33 @@ MCP_SERVERS = {
             }
         }
     },
-
-    "markdownify": {
-        "name": "Markdownify MCP",
-        "type": "git-node",
-        "repo_url": "https://github.com/zcaceres/markdownify-mcp.git",
-        "dir_name": "markdownify-mcp",
-        "check_file": "dist/index.js",
+    "trendradar": {
+        "name": "TrendRadar",
+        "type": "git-python",
+        "repo_url": "https://github.com/sansan0/TrendRadar.git",
+        "dir_name": "TrendRadar",
+        "check_file": "mcp_server/server.py",
         "build_cmds": [
-            "pnpm install",
-            "pnpm run build"
+            "pip install uv",
+            "uv sync"
         ],
         "config_template": {
-            "command": "node",
-            "args": ["{mcp_tools_dir}/markdownify-mcp/dist/index.js"]
-        }
+            "command": "uv",
+            "args": [
+                "--directory",
+                "{mcp_tools_dir}/TrendRadar",
+                "run",
+                "python",
+                "-m",
+                "mcp_server.server"
+            ],
+            "env": {
+                "PYTHONIOENCODING": "utf-8"
+            }
+        },
+        "note": "AI-driven trend monitoring from 35+ platforms. Requires accumulated news data to function."
     },
+
 }
 
 

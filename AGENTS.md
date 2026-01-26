@@ -42,7 +42,6 @@ AI guidance for maximizing **work efficiency**. Detailed workflows via `/workflo
 | `pomera` | Text tools, notes, session memory | Always (default) |
 | `text-editor` | Hash-based conflict-detected edits | Complex multi-file edits |
 | `sequential-thinking` | Step-by-step problem analysis | Complex planning, debugging |
-| `markdownify` | Convert web/docs to markdown | Research, content conversion |
 
 **Toggle servers**: `npx mcpick`
 
@@ -52,7 +51,7 @@ AI guidance for maximizing **work efficiency**. Detailed workflows via `/workflo
 
 | Command | Purpose |
 |---------|---------|
-| `/content-conversion-workflow` | Markdownify, web content extraction |
+| `/content-conversion-workflow` | Web content extraction, format conversion |
 | `/creative-writing` | Creative writing assistance |
 | `/data-analysis` | Data analysis and visualization |
 | `/file-organization-workflow` | Git, backups, project structure |
@@ -90,7 +89,7 @@ Offer search if: current info needed, best practices, error resolution.
 |-----------|--------|-----|
 | Simple Q&A | pomera only | `npx mcpick` |
 | Coding | + text-editor, sequential-thinking | |
-| Research | + markdownify | |
+| Research | + sequential-thinking | |
 | Risky ops | + backup server | |
 
 ### 5. Backup Reminder

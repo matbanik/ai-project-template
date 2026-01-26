@@ -1,16 +1,72 @@
 ---
-description: Hooks, CTAs, and structure templates for landing pages and long-form writing
+description: Positivity-first Title → Hook → Share templates for long-form writing
 ---
 
-# Writing Hooks for Hobby Pages
+# Title → Hook → Share (Positivity-first)
 
-> **AI-GUIDANCE**: Use this guide when creating or updating hook text for hobby landing pages.
+> **AI-GUIDANCE**: Use this guide to write titles that earn the click, hooks that keep people reading, and share moments that earn the forward/share.
 
 ---
 
 ## Overview
 
-A **hook** is the opening sentence(s) that grab attention and compel visitors to keep reading. For hobby pages, hooks should connect emotionally with the reader while introducing the hobby's core value.
+Think of your opening as a 3-stage funnel:
+
+1. **Title** earns the click
+2. **Hook** earns the next paragraph
+3. **Share moments** earn the forward/share
+
+This workflow is **positivity-first** (no anger/fear). It aims for relief, agency, hope, belonging, curiosity, and awe.
+
+## Quickstart (use this, skip the rest)
+
+1. Write **10 title options** using the templates below; pick the clearest 1–3.
+2. Write a **2-paragraph hook**:
+   - Paragraph 1: a specific, relatable situation (make them nod “yes”)
+   - Paragraph 2: what changed + your promise + what they’ll get
+3. Add **1–2 share seeds** in the first page:
+   - a perspective shift (awe) + a concrete takeaway (practical value)
+4. Add an optional **share prompt** near the first strong takeaway.
+
+Template:
+```text
+Title:
+Hook P1 (situation):
+Hook P2 (promise):
+Share seed (awe line):
+Share seed (practical takeaway):
+Share prompt (optional):
+```
+
+## Research-backed share levers (positivity-first)
+
+If you care about sharing, these traits are strongly associated with virality in an analysis of New York Times “most-emailed” articles (Berger & Milkman; summarized in GfK MIR 2013):
+
+| Trait | Share lift | Use it (positively) |
+|------|-----------:|---------------------|
+| **Practical value** | **+30%** | Checklists, steps, templates people feel good sending |
+| **Awe** | **+30%** | A genuine perspective shift (“I didn’t realize…”) |
+| **Interest** | **+25%** | Curiosity gaps + novel angles (no doom) |
+| **Surprise** | **+14%** | Counterintuitive but reassuring insights |
+| **Positivity** | **+13%** | Hope, relief, agency, “you can do this” |
+
+Note: anger (+34%) and anxiety (+21%) also spread in that dataset, but skip them if you’re building a positivity-first brand.
+
+Source: `content-docs/research/gfkmir-2014-emotion-and-virality.pdf` (Figure 1), quick view: `content-docs/research/gfkmir-2014-page4.png`.
+
+## Title templates (click)
+
+- **Benefit + specificity**: “{Result} in {time} (without {common frustration})”
+- **Contrarian (kind)**: “Most advice about {topic} misses this one thing”
+- **Identity**: “If you’re {who}, this will feel familiar”
+- **Story**: “I tried {approach} for {time}. Here’s what changed”
+- **Numbered**: “{X} rules that made {result} finally stick”
+
+## Share techniques (spread)
+
+- **Make it useful to pass on**: distill a checklist, diagram, or “do this next” sequence.
+- **Give a clean quote**: one sentence that names a feeling or reframes a problem.
+- **Let them look good**: frame sharing as helping someone else (“send this to a friend who…”).
 
 ---
 
@@ -57,7 +113,7 @@ A **hook** is the opening sentence(s) that grab attention and compel visitors to
 5. **Listen like crazy** — Understand hidden emotions and desires
 
 **Headline Formula:**
-> Proof + Pain + Benefit = Compelling Hook
+> Proof + Friction + Benefit = Compelling Hook
 
 Example: "Burn Disease Out of Your Body Using Nothing More Than the Palm of Your Hand!"
 
@@ -94,6 +150,8 @@ Example: "Burn Disease Out of Your Body Using Nothing More Than the Palm of Your
 ### 1. PAS (Problem → Agitate → Solution)
 
 **Best for:** Hobbies that solve a pain point
+
+Positivity-first variant: **Problem → Empathize → Solution** (skip the “agitate” step).
 
 ```
 Problem:  "Feeling disconnected from nature?"
@@ -193,154 +251,13 @@ Action:    What to do next
 ❌ **Jargon-heavy**: "Optimize your nutritional macros"
 ❌ **No emotion**: Flat, factual statements without energy
 
-
-
-# README files and larger content that comes after the HOOK
-
-## Consolidated Research
-
-### 2-3 Strategic Searches Only
-
-**Instead of** 5-10 separate searches, execute **maximum 3**:
-
-| Search | Query Pattern | What to Extract |
-|--------|---------------|-----------------|
-| **Search 1** | `[topic] complete guide` OR `[topic] ultimate guide` | Top 3 ranking URLs, H2 structures, word counts |
-| **Search 2** | `[topic] tips` OR `how to [topic]` | Question keywords, People Also Ask, related searches |
-| **Search 3** (if needed) | `[topic] statistics [year]` | Pre-collect stats for later use |
-
-### Extraction Protocol
-
-After each search, extract and store in context:
-- Primary keyword candidate (appears in top titles)
-- 10 secondary keywords (from titles, headings, related searches)
-- 5 question-based keywords
-- Top 3 competitor URLs
-- Any statistics with source URLs
-
-### Commands
-
-```bash
-# General topic research
-python tools/web_search.py "[topic] complete guide" --engine brave --count 10
-
-# Question-based keywords
-python tools/web_search.py "how to [topic]" --engine brave --count 10
-
-# Code/library documentation (Context7 is MCP-only; otherwise use Google)
-python tools/web_search.py "[technical topic]" --engine google
-
-# Google for complex queries (100/day limit)
-python tools/web_search.py "[complex query]" --engine google
-```
-
-
-## Tone Suggestions
-
-### Voice Profile
-
-| Element | Style | Example |
-|---------|-------|---------|
-| **Tone** | Direct, curious, practical | "Here's what actually works." |
-| **Sentences** | Short, punchy | Max 20 words per sentence |
-| **Humor** | Self-deprecating | "I learned this the hard way..." |
-| **Opening** | Personal anecdote or bold claim | "I almost quit cycling last year." |
-| **Closing** | Actionable takeaway + question | "What's your experience with...?" |
-| **Register** | Informal (tú/du not usted/Sie) | Direct "you" address |
-
-### Hook Formulas
-
-| Type | Formula | Example |
-|------|---------|---------|
-| **Curiosity Gap** | "Most people think X, but..." | "Most people think bike fit is about comfort. It's not." |
-| **Bold Claim** | "[Controversial statement]. Here's why." | "You don't need expensive equipment. Here's why." |
-| **Personal Story** | "I [action] and [result]..." | "I rode 5,000 miles last year and learned one thing..." |
-| **Direct Question** | "Have you ever wondered...?" | "Have you ever wondered why your back hurts after riding?" |
-
-## Decision Shortcuts
-
-When uncertain, use these defaults:
-
-| Decision | Default |
-|----------|---------|
-| Word count unclear | 1,500-2,000 words |
-| Audience unclear | Informed beginner |
-| Tone unclear | Direct, conversational |
-| Number of H2 sections | 5-7 |
-| Statistics needed | 3-5 data points |
-| Internal links | 2-3 |
-| External links | 2-3 |
-
-## Hard Limits (Enforce These)
-
-| Activity | Maximum |
-|----------|---------|
-| Brief clarification | 1 exchange |
-| Keyword research searches | 3 searches |
-| Competitor articles analyzed | 3 articles |
-| Time per competitor | 3 minutes |
-| Outline revisions | 1 revision |
-| Meta element revisions | 1 minor tweak at end |
-
-
-
-### Outline Generation - Intent-Based Templates
-
-Match search intent to template:
-
-| Search Intent | Template Structure |
-|---------------|-------------------|
-| **Informational** | Intro → Definition → Context → Key Points (3-5 H2s) → Examples → Conclusion |
-| **How-To** | Intro → Prerequisites → Steps (numbered H2s) → Tips → FAQ → Conclusion |
-| **Comparison** | Intro → Criteria → Option A/B/C → Table → Verdict → Conclusion |
-| **Listicle** | Intro → Items 1-N (H2 each) → Honorable Mentions → Conclusion |
-| **Problem-Solution** | Intro → Problem → Why It Matters → Solutions (H2s) → Implementation → Conclusion |
-
-### Keyword Mapping (One-Time)
-
-| Keyword Type | Placement Rule |
-|--------------|----------------|
-| Primary keyword | Title, Intro (first 100 words), one H2, Conclusion |
-| Top 3 secondary | One per major body section H2 |
-| Question keywords | Use as H2 or H3 subheadings directly |
-| LSI terms | Sprinkle naturally; no forced placement |
-
-### Meta Elements (Draft Once)
-
-```yaml
-meta:
-  title: "[Primary Keyword]: [Value Proposition]"  # 50-60 chars
-  description: "[Benefit/Hook]. Learn [what they'll get]."  # 150-160 chars
-  slug: "primary-keyword-simplified"
-```
-
-**Do not revisit** these until final validation.
-
 ---
-## Competitor Analysis
 
-### Rapid Skim of Top 3 Only
+## After the hook (research, outlines, SEO)
 
-**Time limit:** 3 minutes per competitor article
+This workflow focuses on **Title → Hook → Share**. For research, keyword mapping, outlines, and competitor analysis, use:
 
-For each competitor URL, extract ONLY:
-
-```yaml
-competitor:
-  url: ""
-  h2_headings: []
-  word_count: 0
-  format: "listicle | guide | tutorial | comparison"
-  unique_insight: ""
-  weakness_or_gap: ""
-```
-
-### Aggregation Rules
-
-| Coverage | Action |
-|----------|--------|
-| Subtopic in 2+ competitors | **MUST INCLUDE** |
-| Subtopic in 1 competitor | Consider including |
-| Gap in all 3 | **OPPORTUNITY** (prioritize) |
-
----
+- `/web-search-workflow` (engines + saved searches)
+- `/keyword-guide` (keyword extraction/validation)
+- `/research-project` (structured research + synthesis)
+- `/creative-writing` (blog post planning + drafting)

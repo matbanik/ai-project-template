@@ -108,7 +108,7 @@ searches/
 tools/email/*/
 
 # Generated data files
-content-docs/seo/
+content-docs/
 
 # Large binary files
 *.mp3

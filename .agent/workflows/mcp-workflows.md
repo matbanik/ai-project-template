@@ -18,21 +18,9 @@ description: MCP server management - when to enable/disable for token optimizati
 ## Pre-Session Setup with mcpick
 
 ```bash
-# Install mcpick (one-time)
-npm install -g mcpick
-
-# Run before each session to toggle servers
-npx mcpick
-
 # Effect: Select only needed servers
 # Reduces overhead significantly
 ```
-
-**mcpick workflow:**
-1. Run `npx mcpick` before starting work
-2. Select servers based on task type (see presets below)
-3. Start your AI session with optimized context
-
 ---
 
 ## In-Session Toggle (IDE-dependent)
